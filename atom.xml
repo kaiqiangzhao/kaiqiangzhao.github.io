@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kaiqiangzhao.github.io</id>
     <title>OOK</title>
-    <updated>2020-04-06T07:57:59.347Z</updated>
+    <updated>2020-04-06T08:54:23.778Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kaiqiangzhao.github.io"/>
     <link rel="self" href="https://kaiqiangzhao.github.io/atom.xml"/>
@@ -10,4 +10,40 @@
     <logo>https://kaiqiangzhao.github.io/images/avatar.png</logo>
     <icon>https://kaiqiangzhao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, OOK</rights>
+    <entry>
+        <title type="html"><![CDATA[建站历险记]]></title>
+        <id>https://kaiqiangzhao.github.io/post/jian-zhan-li-xian-ji/</id>
+        <link href="https://kaiqiangzhao.github.io/post/jian-zhan-li-xian-ji/">
+        </link>
+        <updated>2020-04-06T08:04:49.000Z</updated>
+        <summary type="html"><![CDATA[<p>个人blog建站历险记</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>个人blog建站历险记</p>
+<!-- more -->
+<h2 id="自己的建站历险记">自己的建站历险记：</h2>
+<ol>
+<li>github page(jekyll)</li>
+<li>github page((pelican)</li>
+<li>namesilo购买域名</li>
+<li>xxx购买香港服务器</li>
+<li>搭建typecho</li>
+<li>删除香港服务器</li>
+<li>github page(gridea)</li>
+<li>开启github page 的 https</li>
+</ol>
+<h2 id="说明">说明</h2>
+<p>jekyll，pelican, gridea都是静态网站的生成器。</p>
+<p>github page 默认选用就是jekyll<br>
+pelican 的开发语言是python，无管理后台<br>
+gridea 有mac，win，linux平台的管理后台<br>
+typecho的搭建也不复杂，就是没有找到自己喜欢的主题，然后就删了服务器，玩完跑路。</p>
+<h2 id="一些注意事项">一些注意事项：</h2>
+<ul>
+<li>typecho 需要安装php和nginx，注意php版本对应的php-fpm的版本</li>
+<li>需要新建一个数据库，库名叫“typecho”</li>
+<li>typecho文件解压编译的位置所属的用户，要有对数据库的操作权限。否则在web配置页面，会报连接数据库错误。</li>
+<li>dns解析A绑定下面四个ip，<code>185.199.108.153，185.199.109.153，185.199.110.153，185.199.111.153</code>, 不要光绑定你ping出来的那个地址，因为可能会变。具体看<a href="https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site">官网</a></li>
+</ul>
+]]></content>
+    </entry>
 </feed>
