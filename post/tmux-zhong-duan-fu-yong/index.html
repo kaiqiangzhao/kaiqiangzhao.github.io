@@ -1,60 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://kaiqiangzhao.github.io</id>
-    <title>OOK</title>
-    <updated>2020-04-07T15:27:04.104Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://kaiqiangzhao.github.io"/>
-    <link rel="self" href="https://kaiqiangzhao.github.io/atom.xml"/>
-    <subtitle>Simpler life, Deeper mind.</subtitle>
-    <logo>https://kaiqiangzhao.github.io/images/avatar.png</logo>
-    <icon>https://kaiqiangzhao.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, OOK</rights>
-    <entry>
-        <title type="html"><![CDATA[建站历险记]]></title>
-        <id>https://kaiqiangzhao.github.io/post/jian-zhan-li-xian-ji/</id>
-        <link href="https://kaiqiangzhao.github.io/post/jian-zhan-li-xian-ji/">
-        </link>
-        <updated>2020-04-06T08:04:49.000Z</updated>
-        <summary type="html"><![CDATA[<p>个人blog建站历险记</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>个人blog建站历险记</p>
-<!-- more -->
-<h2 id="自己的建站历险记">自己的建站历险记：</h2>
-<ol>
-<li>github page(jekyll)</li>
-<li>github page((pelican)</li>
-<li>namesilo购买域名</li>
-<li>xxx购买香港服务器</li>
-<li>搭建typecho</li>
-<li>删除香港服务器</li>
-<li>github page(gridea)</li>
-<li>开启github page 的 https</li>
-</ol>
-<h2 id="说明">说明</h2>
-<p>jekyll，pelican, gridea都是静态网站的生成器。</p>
-<p>github page 默认选用就是jekyll<br>
-pelican 的开发语言是python，无管理后台<br>
-gridea 有mac，win，linux平台的管理后台<br>
-typecho的搭建也不复杂，就是没有找到自己喜欢的主题，然后就删了服务器，玩完跑路。</p>
-<h2 id="一些注意事项">一些注意事项：</h2>
-<ul>
-<li>typecho 需要安装php和nginx，注意php版本对应的php-fpm的版本</li>
-<li>需要新建一个数据库，库名叫“typecho”</li>
-<li>typecho文件解压编译的位置所属的用户，要有对数据库的操作权限。否则在web配置页面，会报连接数据库错误。</li>
-<li>dns解析A绑定下面四个ip，<code>185.199.108.153，185.199.109.153，185.199.110.153，185.199.111.153</code>, 不要光绑定你ping出来的那个地址，因为可能会变。具体看<a href="https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site">官网</a></li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[tmux-终端复用]]></title>
-        <id>https://kaiqiangzhao.github.io/post/tmux-zhong-duan-fu-yong/</id>
-        <link href="https://kaiqiangzhao.github.io/post/tmux-zhong-duan-fu-yong/">
-        </link>
-        <updated>2018-12-17T15:16:55.000Z</updated>
-        <summary type="html"><![CDATA[<p>linux 下的终端复用工具，一般用来跑后台程序，以防网络中断，退出会话，导致程序终止。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>linux 下的终端复用工具，一般用来跑后台程序，以防网络中断，退出会话，导致程序终止。</p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>tmux-终端复用 | OOK</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://kaiqiangzhao.github.io/favicon.ico?v=1586273176755">
+<link rel="stylesheet" href="https://kaiqiangzhao.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="linux 下的终端复用工具，一般用来跑后台程序，以防网络中断，退出会话，导致程序终止。
+
+
+简介
+会话
+窗口
+窗格
+
+
+简介
+tmux is a terminal multiplexer.(终端复用)
+tmux是终端多路复用神器。它允许你..." />
+    <meta name="keywords" content="linux" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://kaiqiangzhao.github.io">
+        <img src="https://kaiqiangzhao.github.io/images/avatar.png?v=1586273176755" class="site-logo">
+        <h1 class="site-title">OOK</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://www.zhihu.com/people/ooker" target="_blank">
+            <i class="fab fa-zhihu"></i>
+          </a>
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Simpler life, Deeper mind.
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://kaiqiangzhao.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">tmux-终端复用</h2>
+            <div class="post-date">2018-12-17</div>
+            
+            <div class="post-content" v-pre>
+              <p>linux 下的终端复用工具，一般用来跑后台程序，以防网络中断，退出会话，导致程序终止。</p>
 <!-- more -->
 <ol>
 <li>简介</li>
@@ -173,6 +228,50 @@ typecho的搭建也不复杂，就是没有找到自己喜欢的主题，然后�
 <ul>
 <li>关闭当前使用中的pane，操作后有关闭提示</li>
 </ul>
-]]></content>
-    </entry>
-</feed>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://kaiqiangzhao.github.io/tag/8zbomjMYO/" class="tag">
+                    linux
+                  </a>
+                
+              </div>
+            
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
