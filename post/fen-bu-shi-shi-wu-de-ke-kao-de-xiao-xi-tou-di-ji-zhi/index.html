@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>如何保证幂等性 | OOK</title>
+<title>分布式事务中可靠的消息投递机制 | OOK</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,19 +18,10 @@
 
 
 
-    <meta name="description" content="保证幂等性的四种方式
-
-
-创建唯一索引
-先select, 后insert
-分布式锁(redis)
-状态机
-
-
-1. 创建唯一索引
-如退款服务，调用支付服务，完成退款。
-可以使用退款编码作为出账流水表的唯一索引。
-当支付服务进行退款操作，创建..." />
+    <meta name="description" content="消费者消费消息告知消息队列的两种机制：
+自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败
+手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息
+当消费者服务采取了限流措施，可能导致消息失败消费多次，从..." />
     <meta name="keywords" content="架构" />
   </head>
   <body>
@@ -106,44 +97,18 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">如何保证幂等性</h2>
-            <div class="post-date">2020-04-09</div>
+            <h2 class="post-title">分布式事务中可靠的消息投递机制</h2>
+            <div class="post-date">2020-04-11</div>
             
             <div class="post-content" v-pre>
-              <p>保证幂等性的四种方式</p>
-<!-- more -->
-<ol>
-<li>创建唯一索引</li>
-<li>先select, 后insert</li>
-<li>分布式锁(redis)</li>
-<li>状态机</li>
-</ol>
-<hr>
-<h2 id="1-创建唯一索引">1. 创建唯一索引</h2>
-<p>如退款服务，调用支付服务，完成退款。<br>
-可以使用退款编码作为出账流水表的唯一索引。<br>
-当支付服务进行退款操作，创建出账流水时，如果已完成退款，会因为唯一索引重复而创建失败</p>
-<p>如果分库分表，不同库表的唯一索引不同步，可能造成在不同的库表重复创建退款记录。</p>
-<h2 id="2-先select-后insert">2. 先select, 后insert</h2>
-<p>那就不能直接创建，需要先查询所有库表内有没有约束索引，没有的话再创建出账流水。</p>
-<p>但是查询和插入不是原子操作，不同的线程都可以执行查询操作，然后进入同一片临界区，如常用的if语句。<br>
-然后都执行了插入操作。</p>
-<h2 id="3-分布式锁">3. 分布式锁</h2>
-<p>插入更新操作前需要先获取到锁。此时不需要对查询加锁，因为多个线程都查询后，进入临界区，执行插入操作，没有获得锁的全部按失效处理后退出。<br>
-常用有redis分布式锁。<br>
-上锁命令为<code>setnx key</code>(set if not exists)<br>
-去锁命令为<code>del key</code></p>
-<p>redis实现分布式锁存在下面三个问题</p>
-<p><strong>问题1：</strong><br>
-为了避免因为异常，导致释放锁失败，需要给锁加上过期时间<code>expire key 5</code></p>
-<p><strong>问题2：</strong><br>
-但是这里也存在一个问题，就是<code>setnx key</code>和<code>expire key 5</code>命令中间redis服务器发生宕机，这样也可能出现死锁。<br>
-可以使用一下命令，将二者绑定为原子操作<code>set key true ex 5 nx</code></p>
-<p><strong>问题3：</strong><br>
-还有一个问题就是，锁过期时间不能小于业务执行时间，一般的业务操作会放入消息队列里等待执行，如果<code>del key</code>操作之前锁过期了，就无法串行执行，依旧会出现非幂等数据。</p>
-<h2 id="4-状态机">4. 状态机</h2>
-<p>执行操作前先判断资源的状态是否符合状态流转的条件，不要在代码里面<code>if</code>判断，否则又会陷入上面第二个问题。将状态判断交给数据库，靠数据库本身的锁机制进行控制。</p>
-<p><code>update order set status=1 where status=2</code></p>
+              <p>消费者消费消息告知消息队列的两种机制：<br>
+自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败<br>
+手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息</p>
+<p>当消费者服务采取了限流措施，可能导致消息失败消费多次，从而进入死信队列，这时候需要人工干预来处理这些位于死信队列的消息。</p>
+<p>按理说，手动应答机制可以也可以实现消息的最终一致性，但可能导致消息队列性能下降，堆积大量失败消息。且其只能保证消费者和消息队列之前的消息的可靠投递。在消息的提供者和消息队列间，有可能出现消息写入消息队列失败，这样消息就会丢失。</p>
+<p>问题的关键就在于上游服务对下游服务不管不顾。</p>
+<p>消息传递形成闭环，即正反向消息机制，上游要知晓下游执行结果，并采取补偿机制，从而实现最终一致性，其中可能会出现消息重复投递的情况，要保证幂等性，可查阅之前的文章。</p>
+<figure data-type="image" tabindex="1"><img src="https://kaiqiangzhao.github.io/post-images/1586575437620.png" alt="" loading="lazy"></figure>
 
             </div>
             
@@ -158,9 +123,9 @@
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://kaiqiangzhao.github.io/post/jian-zhan-li-xian-ji/">
+                <a href="https://kaiqiangzhao.github.io/post/ru-he-bao-zheng-mi-deng-xing/">
                   <h3 class="post-title">
-                    建站历险记
+                    如何保证幂等性
                   </h3>
                 </a>
               </div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kaiqiangzhao.github.io</id>
     <title>OOK</title>
-    <updated>2020-04-10T03:48:45.784Z</updated>
+    <updated>2020-04-11T03:24:14.898Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kaiqiangzhao.github.io"/>
     <link rel="self" href="https://kaiqiangzhao.github.io/atom.xml"/>
@@ -10,6 +10,22 @@
     <logo>https://kaiqiangzhao.github.io/images/avatar.png</logo>
     <icon>https://kaiqiangzhao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, OOK</rights>
+    <entry>
+        <title type="html"><![CDATA[分布式事务中可靠的消息投递机制]]></title>
+        <id>https://kaiqiangzhao.github.io/post/fen-bu-shi-shi-wu-de-ke-kao-de-xiao-xi-tou-di-ji-zhi/</id>
+        <link href="https://kaiqiangzhao.github.io/post/fen-bu-shi-shi-wu-de-ke-kao-de-xiao-xi-tou-di-ji-zhi/">
+        </link>
+        <updated>2020-04-11T03:03:11.000Z</updated>
+        <content type="html"><![CDATA[<p>消费者消费消息告知消息队列的两种机制：<br>
+自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败<br>
+手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息</p>
+<p>当消费者服务采取了限流措施，可能导致消息失败消费多次，从而进入死信队列，这时候需要人工干预来处理这些位于死信队列的消息。</p>
+<p>按理说，手动应答机制可以也可以实现消息的最终一致性，但可能导致消息队列性能下降，堆积大量失败消息。且其只能保证消费者和消息队列之前的消息的可靠投递。在消息的提供者和消息队列间，有可能出现消息写入消息队列失败，这样消息就会丢失。</p>
+<p>问题的关键就在于上游服务对下游服务不管不顾。</p>
+<p>消息传递形成闭环，即正反向消息机制，上游要知晓下游执行结果，并采取补偿机制，从而实现最终一致性，其中可能会出现消息重复投递的情况，要保证幂等性，可查阅之前的文章。</p>
+<figure data-type="image" tabindex="1"><img src="https://kaiqiangzhao.github.io/post-images/1586575437620.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[如何保证幂等性]]></title>
         <id>https://kaiqiangzhao.github.io/post/ru-he-bao-zheng-mi-deng-xing/</id>
