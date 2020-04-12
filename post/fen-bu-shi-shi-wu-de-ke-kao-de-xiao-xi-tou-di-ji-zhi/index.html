@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://kaiqiangzhao.github.io/favicon.ico?v=1586575449194">
+<link rel="shortcut icon" href="https://kaiqiangzhao.github.io/favicon.ico?v=1586683316419">
 <link rel="stylesheet" href="https://kaiqiangzhao.github.io/styles/main.css">
 
 
@@ -31,7 +31,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://kaiqiangzhao.github.io">
-        <img src="https://kaiqiangzhao.github.io/images/avatar.png?v=1586575449194" class="site-logo">
+        <img src="https://kaiqiangzhao.github.io/images/avatar.png?v=1586683316419" class="site-logo">
         <h1 class="site-title">OOK</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -105,7 +105,7 @@
 自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败<br>
 手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息</p>
 <p>当消费者服务采取了限流措施，可能导致消息失败消费多次，从而进入死信队列，这时候需要人工干预来处理这些位于死信队列的消息。</p>
-<p>按理说，手动应答机制可以也可以实现消息的最终一致性，但可能导致消息队列性能下降，堆积大量失败消息。且其只能保证消费者和消息队列之前的消息的可靠投递。在消息的提供者和消息队列间，有可能出现消息写入消息队列失败，这样消息就会丢失。</p>
+<p>按理说，手动应答机制也可以实现消息的最终一致性，但可能导致消息队列性能下降，堆积大量失败消息。且其只能保证消费者和消息队列之前的消息的可靠投递。在消息的提供者和消息队列间，有可能出现消息写入消息队列失败，这样消息就会丢失。</p>
 <p>问题的关键就在于上游服务对下游服务不管不顾。</p>
 <p>消息传递形成闭环，即正反向消息机制，上游要知晓下游执行结果，并采取补偿机制，从而实现最终一致性，其中可能会出现消息重复投递的情况，要保证幂等性，可查阅之前的文章。</p>
 <figure data-type="image" tabindex="1"><img src="https://kaiqiangzhao.github.io/post-images/1586575437620.png" alt="" loading="lazy"></figure>

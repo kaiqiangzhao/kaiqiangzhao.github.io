@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kaiqiangzhao.github.io</id>
     <title>OOK</title>
-    <updated>2020-04-11T05:56:10.966Z</updated>
+    <updated>2020-04-12T09:22:07.867Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kaiqiangzhao.github.io"/>
     <link rel="self" href="https://kaiqiangzhao.github.io/atom.xml"/>
@@ -10,6 +10,95 @@
     <logo>https://kaiqiangzhao.github.io/images/avatar.png</logo>
     <icon>https://kaiqiangzhao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, OOK</rights>
+    <entry>
+        <title type="html"><![CDATA[动态规划分析步骤]]></title>
+        <id>https://kaiqiangzhao.github.io/post/dong-tai-gui-hua-fen-xi-bu-zou/</id>
+        <link href="https://kaiqiangzhao.github.io/post/dong-tai-gui-hua-fen-xi-bu-zou/">
+        </link>
+        <updated>2020-04-12T09:17:54.000Z</updated>
+        <summary type="html"><![CDATA[<p>分析一个问题是否可以采用动态规划求解，以及如何求解</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>分析一个问题是否可以采用动态规划求解，以及如何求解</p>
+<!-- more -->
+<h3 id="动态规划">动态规划</h3>
+<ul>
+<li>重叠子问题</li>
+<li>最优子问题</li>
+<li>状态转移方程</li>
+<li>分析过程</li>
+<li>备忘录和db table</li>
+</ul>
+<hr>
+<h3 id="重叠子问题">重叠子问题</h3>
+<p>问题可以被拆分为多个子问题</p>
+<p>多个子问题存在重复求解</p>
+<p>可以使用备忘录或db table</p>
+<h3 id="最优子问题">最优子问题</h3>
+<p>问题最优解可以被拆分为多个子问题的最优解</p>
+<p>多个子问题的最优解不存在互相制约</p>
+<h3 id="状态转移方程">状态转移方程</h3>
+<p>问题可以被拆分为多个子问题可以使用方程表示</p>
+<hr>
+<h3 id="分析过程">分析过程</h3>
+<p>首先要知道，动态规划一定需要遍历全部可能，并且需要递归的去遍历全部可能</p>
+<ul>
+<li>明确状态(确定问题可以拆分的变量, 这些变量可以传进子问题)</li>
+<li>定义函数的含义(写出简单的函数结构)</li>
+<li>最子问题的返回结果进行什么操作</li>
+<li>确定问题边界(递归退出边界)</li>
+</ul>
+<ol>
+<li>明确状态(变化的变量)</li>
+</ol>
+<p>​	   f(n) = f(n-1) + f(n-2), 那就是变量n在变化，并在子问题传递</p>
+<ol start="2">
+<li>定义函数含义</li>
+</ol>
+<p>​	   def dp(n): return res; dp函数的含义，在n的时候，返回res（int，list，dict等）</p>
+<ol start="3">
+<li>最子问题的返回结果进行什么操作</li>
+</ol>
+<p>​	  dp(n-1), dp(n-2)等返回的结果需要进行怎样的操作，加，减，比大小，取最小，取最大等</p>
+<ol start="4">
+<li>确定问题边界(递归退出边界)</li>
+</ol>
+<p>​	   n = 0，n = -1等边界值要确定，正确退出递归</p>
+<hr>
+<h3 id="备忘录和db-table">备忘录和db table</h3>
+<p><strong>找零钱问题</strong></p>
+<p>给总金额amount，从k中面值的硬币，面值为c1,c2,c3,,,，问最少需要几枚硬币凑出这个金额，如果不能凑出，算法返回-1。</p>
+<p>如 k=3 ， 面值分别为1，2，5，总金额amount=11.最少需要3枚硬币凑出, 11=5+5+1。</p>
+<p>问题分析：</p>
+<p>想要知道11最少需要几枚硬币，则分别计算出10，8， 6最少需要的硬币数，取最小，结果+1就是答案</p>
+<ol>
+<li>
+<p>依次类推，所以可以拆分为子问题，变量为总金额</p>
+</li>
+<li>
+<p>定义函数dp(amount), 输入总金额，返回最少需要的硬币数</p>
+</li>
+<li>
+<p>返回的最小硬币数，需要执行哪些操作，取最小min</p>
+</li>
+<li>
+<p>边界，amount&lt;0, 不存在，==0. 存在</p>
+</li>
+</ol>
+<ul>
+<li>备忘录</li>
+</ul>
+<p>备忘录一般采用dict记录，其中的key是我们关心的变量，value是计算的结果</p>
+<p>那key就是amount，计算结果就是最小个数</p>
+<p>备忘录一般都是自顶向下求解，</p>
+<ul>
+<li>db table</li>
+</ul>
+<p>db table 一般使用一维，二维数组来计算，需要将数组的下标和变量进行关联，下标对应的值就是计算结果。</p>
+<p>在找零钱中，下标就是备忘录的变量amount，下标对应的值就是最小个数</p>
+<p>db table 一般都是自底向上求解的。</p>
+<p>在找零钱中，需要先计算总金额为0元，1元，2元，最后到给定的总额度</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[分布式事务中可靠的消息投递机制]]></title>
         <id>https://kaiqiangzhao.github.io/post/fen-bu-shi-shi-wu-de-ke-kao-de-xiao-xi-tou-di-ji-zhi/</id>
@@ -20,7 +109,7 @@
 自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败<br>
 手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息</p>
 <p>当消费者服务采取了限流措施，可能导致消息失败消费多次，从而进入死信队列，这时候需要人工干预来处理这些位于死信队列的消息。</p>
-<p>按理说，手动应答机制可以也可以实现消息的最终一致性，但可能导致消息队列性能下降，堆积大量失败消息。且其只能保证消费者和消息队列之前的消息的可靠投递。在消息的提供者和消息队列间，有可能出现消息写入消息队列失败，这样消息就会丢失。</p>
+<p>按理说，手动应答机制也可以实现消息的最终一致性，但可能导致消息队列性能下降，堆积大量失败消息。且其只能保证消费者和消息队列之前的消息的可靠投递。在消息的提供者和消息队列间，有可能出现消息写入消息队列失败，这样消息就会丢失。</p>
 <p>问题的关键就在于上游服务对下游服务不管不顾。</p>
 <p>消息传递形成闭环，即正反向消息机制，上游要知晓下游执行结果，并采取补偿机制，从而实现最终一致性，其中可能会出现消息重复投递的情况，要保证幂等性，可查阅之前的文章。</p>
 <figure data-type="image" tabindex="1"><img src="https://kaiqiangzhao.github.io/post-images/1586575437620.png" alt="" loading="lazy"></figure>
