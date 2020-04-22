@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kaiqiangzhao.github.io</id>
     <title>OOK</title>
-    <updated>2020-04-22T13:32:52.866Z</updated>
+    <updated>2020-04-22T16:22:22.635Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kaiqiangzhao.github.io"/>
     <link rel="self" href="https://kaiqiangzhao.github.io/atom.xml"/>
@@ -90,6 +90,55 @@ P(A|B) 表示在B发生的前提下发生A的概率，若A，B两个事件独立
 <p>这样会有2的n次方的概率要求解，计算机无法满足，由于组合太多，有写特征的组合在数据集中出现的次数很少，甚至不出现，所以其概率会为0.</p>
 <h2 id="总结">总结</h2>
 <p>朴素贝叶斯的计算，P(A)使用全概率公式计算，P(A|B)使用条件独立性假设公式计算，P(B)就用样本数占总样本的比例来代替，就可以得到结果。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MySQL client ran out of memory]]></title>
+        <id>https://kaiqiangzhao.github.io/post/mysql-client-ran-out-of-memory/</id>
+        <link href="https://kaiqiangzhao.github.io/post/mysql-client-ran-out-of-memory/">
+        </link>
+        <updated>2020-04-20T09:31:40.000Z</updated>
+        <summary type="html"><![CDATA[<p>访问网站，调试控制台报出的504 (gateway time-out)错误</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>访问网站，调试控制台报出的504 (gateway time-out)错误</p>
+<!-- more -->
+<pre><code>failed to load resource the server responded with a status of 504 (gateway time-out)
+</code></pre>
+<p>504 网关超时，表示服务器没有及时处理完数据，客户端主动连接断开后，客户端(如浏览器)生成的http状态码，而非服务端返回的状态码。</p>
+<p>如nginx中有下面三项配置：<br>
+但都是nginx和服务端的关系，即nginx要求服务端在规定时间内连接，处理，返回数据成功。</p>
+<pre><code>后端服务器连接的超时时间_发起握手等候响应超时时间
+nginx跟后端服务器连接超时时间(代理连接超时)
+proxy_connect_timeout 60;
+
+后端服务器数据回传时间(代理发送超时)
+后端服务器数据回传时间_就是在规定时间之内后端服务器必须传完所有的数据
+proxy_send_timeout 60;
+
+连接成功后，后端服务器响应时间(代理接收超时)
+连接成功后_等候后端服务器响应时间_其实已经进入后端的排队之中等候处理（也可以说是后端服务器处理请求的时间）
+proxy_read_timeout 60;
+</code></pre>
+<p>查看nginx日志，发现nginx返回的状态码为499，对应的是 “client has closed connection”，即服务端处理时间太长，客户端关闭了连接。</p>
+<p>所以归根到底，还是服务器的问题。<br>
+可以分为下面两种情况：</p>
+<ul>
+<li>服务器接处理的这个请求慢但是可以正常处理，</li>
+<li>服务器在处理这个请求的时候出现了非bug导致的异常，导致执行中断，因为是bug导致的异常会被捕获，返回给客户端其他的状态码。</li>
+</ul>
+<p>还是需要回归代码，需要重点关注是否有复杂的逻辑代码，以及数据库慢查询(查询语句不正确或数据量大)，或数据库异常。</p>
+<p>最后发现了一条查询语句的返回了20万条的数据。<br>
+在错误日志中也找到了<code>MySQL client ran out of memory</code>的报错。</p>
+<p>网上很多资料说是修改mysql的配置文件my.cnf，加大缓存空间，其实我们更应该做的是优化查询语句，如是否可以通过limit减少一次查询出来的数据量。</p>
+<p>mysql<a href="https://dev.mysql.com/doc/refman/8.0/en/out-of-memory.html">官网</a>也说道若要解决此问题，首先检查查询是否正确。 它返回这么多行是否合理？ 也可以使用--quick选项来避免对查询结果进行缓存，但也会加重数据库的查询负载。</p>
+<h3 id="总结">总结</h3>
+<ul>
+<li>前端收到504超时</li>
+<li>nginx的499</li>
+<li>慢查询或数据错误</li>
+<li>优化查询语句</li>
+</ul>
+<p>参考链接：https://www.lifewire.com/504-gateway-timeout-error-explained-2622941</p>
 ]]></content>
     </entry>
     <entry>
