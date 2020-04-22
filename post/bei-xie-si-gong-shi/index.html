@@ -1,24 +1,120 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://kaiqiangzhao.github.io</id>
-    <title>OOK</title>
-    <updated>2020-04-22T06:19:00.278Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://kaiqiangzhao.github.io"/>
-    <link rel="self" href="https://kaiqiangzhao.github.io/atom.xml"/>
-    <subtitle>Simpler life, Deeper mind.</subtitle>
-    <logo>https://kaiqiangzhao.github.io/images/avatar.png</logo>
-    <icon>https://kaiqiangzhao.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, OOK</rights>
-    <entry>
-        <title type="html"><![CDATA[贝叶斯公式]]></title>
-        <id>https://kaiqiangzhao.github.io/post/bei-xie-si-gong-shi/</id>
-        <link href="https://kaiqiangzhao.github.io/post/bei-xie-si-gong-shi/">
-        </link>
-        <updated>2020-04-21T00:39:48.000Z</updated>
-        <summary type="html"><![CDATA[<p>数学中的哲学</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>数学中的哲学</p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>贝叶斯公式 | OOK</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.0/css/all.min.css">
+<link rel="shortcut icon" href="https://kaiqiangzhao.github.io/favicon.ico?v=1587536312229">
+<link rel="stylesheet" href="https://kaiqiangzhao.github.io/styles/main.css">
+
+
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="数学中的哲学
+
+在讲贝叶斯公式之前，需要先讲解两个概率公式
+
+条件概率公式
+全概率公式
+
+条件概率
+下面是条件概率的公式：
+公式1：P(A|B) = P(AB) / P(B)
+若条件B的发生与否对事件A无任何影响，则可认为A，B两个事件独立..." />
+    <meta name="keywords" content="人工智能" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://kaiqiangzhao.github.io">
+        <img src="https://kaiqiangzhao.github.io/images/avatar.png?v=1587536312229" class="site-logo">
+        <h1 class="site-title">OOK</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a class="social-link" href="https://www.zhihu.com/people/ooker" target="_blank">
+            <i class="fab fa-zhihu"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Simpler life, Deeper mind.
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://kaiqiangzhao.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">贝叶斯公式</h2>
+            <div class="post-date">2020-04-21</div>
+            
+            <div class="post-content" v-pre>
+              <p>数学中的哲学</p>
 <!-- more -->
 <p>在讲贝叶斯公式之前，需要先讲解两个概率公式</p>
 <ul>
@@ -89,320 +185,59 @@ P(A|B) 表示在B发生的前提下发生A的概率，若A，B两个事件独立
 <p>这样会有2的n次方的概率要求解，计算机无法满足，由于组合太多，有写特征的组合在数据集中出现的次数很少，甚至不出现，所以其概率会为0.</p>
 <h2 id="总结">总结</h2>
 <p>朴素贝叶斯的计算，P(A)使用全概率公式计算，P(A|B)使用条件独立性假设公式计算，P(B)就用样本数占总样本的比例来代替，就可以得到结果。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[动态规划分析步骤]]></title>
-        <id>https://kaiqiangzhao.github.io/post/dong-tai-gui-hua-fen-xi-bu-zou/</id>
-        <link href="https://kaiqiangzhao.github.io/post/dong-tai-gui-hua-fen-xi-bu-zou/">
-        </link>
-        <updated>2020-04-12T09:17:54.000Z</updated>
-        <summary type="html"><![CDATA[<p>分析一个问题是否可以采用动态规划求解，以及如何求解</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>分析一个问题是否可以采用动态规划求解，以及如何求解</p>
-<!-- more -->
-<h3 id="动态规划">动态规划</h3>
-<ul>
-<li>重叠子问题</li>
-<li>最优子问题</li>
-<li>状态转移方程</li>
-<li>分析过程</li>
-<li>备忘录和db table</li>
-</ul>
-<hr>
-<h3 id="重叠子问题">重叠子问题</h3>
-<p>问题可以被拆分为多个子问题</p>
-<p>多个子问题存在重复求解</p>
-<p>可以使用备忘录或db table</p>
-<h3 id="最优子问题">最优子问题</h3>
-<p>问题最优解可以被拆分为多个子问题的最优解</p>
-<p>多个子问题的最优解不存在互相制约</p>
-<h3 id="状态转移方程">状态转移方程</h3>
-<p>问题可以被拆分为多个子问题可以使用方程表示</p>
-<hr>
-<h3 id="分析过程">分析过程</h3>
-<p>首先要知道，动态规划一定需要遍历全部可能，并且需要递归的去遍历全部可能</p>
-<ul>
-<li>明确状态(确定问题可以拆分的变量, 这些变量可以传进子问题)</li>
-<li>定义函数的含义(写出简单的函数结构)</li>
-<li>最子问题的返回结果进行什么操作</li>
-<li>确定问题边界(递归退出边界)</li>
-</ul>
-<ol>
-<li>明确状态(变化的变量)</li>
-</ol>
-<p>​	   f(n) = f(n-1) + f(n-2), 那就是变量n在变化，并在子问题传递</p>
-<ol start="2">
-<li>定义函数含义</li>
-</ol>
-<p>​	   def dp(n): return res; dp函数的含义，在n的时候，返回res（int，list，dict等）</p>
-<ol start="3">
-<li>最子问题的返回结果进行什么操作</li>
-</ol>
-<p>​	  dp(n-1), dp(n-2)等返回的结果需要进行怎样的操作，加，减，比大小，取最小，取最大等</p>
-<ol start="4">
-<li>确定问题边界(递归退出边界)</li>
-</ol>
-<p>​	   n = 0，n = -1等边界值要确定，正确退出递归</p>
-<hr>
-<h3 id="备忘录和db-table">备忘录和db table</h3>
-<p><strong>找零钱问题</strong></p>
-<p>给总金额amount，从k中面值的硬币，面值为c1,c2,c3,,,，问最少需要几枚硬币凑出这个金额，如果不能凑出，算法返回-1。</p>
-<p>如 k=3 ， 面值分别为1，2，5，总金额amount=11.最少需要3枚硬币凑出, 11=5+5+1。</p>
-<p>问题分析：</p>
-<p>想要知道11最少需要几枚硬币，则分别计算出10，8， 6最少需要的硬币数，取最小，结果+1就是答案</p>
-<ol>
-<li>
-<p>依次类推，所以可以拆分为子问题，变量为总金额</p>
-</li>
-<li>
-<p>定义函数dp(amount), 输入总金额，返回最少需要的硬币数</p>
-</li>
-<li>
-<p>返回的最小硬币数，需要执行哪些操作，取最小min</p>
-</li>
-<li>
-<p>边界，amount&lt;0, 不存在，==0. 存在</p>
-</li>
-</ol>
-<ul>
-<li>备忘录</li>
-</ul>
-<p>备忘录一般采用dict记录，其中的key是我们关心的变量，value是计算的结果</p>
-<p>那key就是amount，计算结果就是最小个数</p>
-<p>备忘录一般都是自顶向下求解，</p>
-<ul>
-<li>db table</li>
-</ul>
-<p>db table 一般使用一维，二维数组来计算，需要将数组的下标和变量进行关联，下标对应的值就是计算结果。</p>
-<p>在找零钱中，下标就是备忘录的变量amount，下标对应的值就是最小个数</p>
-<p>db table 一般都是自底向上求解的。</p>
-<p>在找零钱中，需要先计算总金额为0元，1元，2元，最后到给定的总额度</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[分布式事务中可靠的消息投递机制]]></title>
-        <id>https://kaiqiangzhao.github.io/post/fen-bu-shi-shi-wu-de-ke-kao-de-xiao-xi-tou-di-ji-zhi/</id>
-        <link href="https://kaiqiangzhao.github.io/post/fen-bu-shi-shi-wu-de-ke-kao-de-xiao-xi-tou-di-ji-zhi/">
-        </link>
-        <updated>2020-04-11T03:03:11.000Z</updated>
-        <content type="html"><![CDATA[<p>消费者消费消息告知消息队列的两种机制：<br>
-自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败<br>
-手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息</p>
-<p>当消费者服务采取了限流措施，可能导致消息失败消费多次，从而进入死信队列，这时候需要人工干预来处理这些位于死信队列的消息。</p>
-<p>按理说，手动应答机制也可以实现消息的最终一致性，但可能导致消息队列性能下降，堆积大量失败消息。且其只能保证消费者和消息队列之前的消息的可靠投递。在消息的提供者和消息队列间，有可能出现消息写入消息队列失败，这样消息就会丢失。</p>
-<p>问题的关键就在于上游服务对下游服务不管不顾。</p>
-<p>消息传递形成闭环，即正反向消息机制，上游要知晓下游执行结果，并采取补偿机制，从而实现最终一致性，其中可能会出现消息重复投递的情况，要保证幂等性，可查阅之前的文章。</p>
-<figure data-type="image" tabindex="1"><img src="https://kaiqiangzhao.github.io/post-images/1586575437620.png" alt="" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[如何保证幂等性]]></title>
-        <id>https://kaiqiangzhao.github.io/post/ru-he-bao-zheng-mi-deng-xing/</id>
-        <link href="https://kaiqiangzhao.github.io/post/ru-he-bao-zheng-mi-deng-xing/">
-        </link>
-        <updated>2020-04-09T14:28:01.000Z</updated>
-        <summary type="html"><![CDATA[<p>保证幂等性的四种方式</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>保证幂等性的四种方式</p>
-<!-- more -->
-<ol>
-<li>创建唯一索引</li>
-<li>先select, 后insert</li>
-<li>分布式锁(redis)</li>
-<li>状态机</li>
-</ol>
-<hr>
-<h2 id="1-创建唯一索引">1. 创建唯一索引</h2>
-<p>如退款服务，调用支付服务，完成退款。<br>
-可以使用退款编码作为出账流水表的唯一索引。<br>
-当支付服务进行退款操作，创建出账流水时，如果已完成退款，会因为唯一索引重复而创建失败</p>
-<p>如果分库分表，不同库表的唯一索引不同步，可能造成在不同的库表重复创建退款记录。</p>
-<h2 id="2-先select-后insert">2. 先select, 后insert</h2>
-<p>那就不能直接创建，需要先查询所有库表内有没有约束索引，没有的话再创建出账流水。</p>
-<p>但是查询和插入不是原子操作，不同的线程都可以执行查询操作，然后进入同一片临界区，如常用的if语句。<br>
-然后都执行了插入操作。</p>
-<h2 id="3-分布式锁">3. 分布式锁</h2>
-<p>插入更新操作前需要先获取到锁。此时不需要对查询加锁，因为多个线程都查询后，进入临界区，执行插入操作，没有获得锁的全部按失效处理后退出。<br>
-常用有redis分布式锁。<br>
-上锁命令为<code>setnx key</code>(set if not exists)<br>
-去锁命令为<code>del key</code></p>
-<p>redis实现分布式锁存在下面三个问题</p>
-<p><strong>问题1：</strong><br>
-为了避免因为异常，导致释放锁失败，需要给锁加上过期时间<code>expire key 5</code></p>
-<p><strong>问题2：</strong><br>
-但是这里也存在一个问题，就是<code>setnx key</code>和<code>expire key 5</code>命令中间redis服务器发生宕机，这样也可能出现死锁。<br>
-可以使用一下命令，将二者绑定为原子操作<code>set key true ex 5 nx</code></p>
-<p><strong>问题3：</strong><br>
-还有一个问题就是，锁过期时间不能小于业务执行时间，一般的业务操作会放入消息队列里等待执行，如果<code>del key</code>操作之前锁过期了，就无法串行执行，依旧会出现非幂等数据。</p>
-<h2 id="4-状态机">4. 状态机</h2>
-<p>执行操作前先判断资源的状态是否符合状态流转的条件，不要在代码里面<code>if</code>判断，否则又会陷入上面第二个问题。将状态判断交给数据库，靠数据库本身的锁机制进行控制。</p>
-<p><code>update order set status=1 where status=2</code></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[建站历险记]]></title>
-        <id>https://kaiqiangzhao.github.io/post/jian-zhan-li-xian-ji/</id>
-        <link href="https://kaiqiangzhao.github.io/post/jian-zhan-li-xian-ji/">
-        </link>
-        <updated>2020-04-06T08:04:49.000Z</updated>
-        <summary type="html"><![CDATA[<p>个人blog建站历险记</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>个人blog建站历险记</p>
-<!-- more -->
-<h2 id="自己的建站历险记">自己的建站历险记：</h2>
-<ol>
-<li>github page(jekyll)</li>
-<li>github page((pelican)</li>
-<li>namesilo购买域名</li>
-<li>xxx购买香港服务器</li>
-<li>搭建typecho</li>
-<li>删除香港服务器</li>
-<li>github page(gridea)</li>
-<li>开启github page 的 https</li>
-</ol>
-<h2 id="说明">说明</h2>
-<p>jekyll，pelican, gridea都是静态网站的生成器。</p>
-<p>github page 默认选用就是jekyll<br>
-pelican 的开发语言是python，无管理后台<br>
-gridea 有mac，win，linux平台的管理后台<br>
-typecho的搭建也不复杂，就是没有找到自己喜欢的主题，然后就删了服务器，玩完跑路。</p>
-<h2 id="一些注意事项">一些注意事项：</h2>
-<ul>
-<li>typecho 需要安装php和nginx，注意php版本对应的php-fpm的版本</li>
-<li>需要新建一个数据库，库名叫“typecho”</li>
-<li>typecho文件解压编译的位置所属的用户，要有对数据库的操作权限。否则在web配置页面，会报连接数据库错误。</li>
-<li>dns解析A绑定下面四个ip，<code>185.199.108.153，185.199.109.153，185.199.110.153，185.199.111.153</code>, 不要光绑定你ping出来的那个地址，因为可能会变。具体看<a href="https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site">官网</a></li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[tmux-终端复用]]></title>
-        <id>https://kaiqiangzhao.github.io/post/tmux-zhong-duan-fu-yong/</id>
-        <link href="https://kaiqiangzhao.github.io/post/tmux-zhong-duan-fu-yong/">
-        </link>
-        <updated>2018-12-17T15:16:55.000Z</updated>
-        <summary type="html"><![CDATA[<p>linux 下的终端复用工具，一般用来跑后台程序，以防网络中断，退出会话，导致程序终止。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>linux 下的终端复用工具，一般用来跑后台程序，以防网络中断，退出会话，导致程序终止。</p>
-<!-- more -->
-<ol>
-<li>简介</li>
-<li>会话</li>
-<li>窗口</li>
-<li>窗格</li>
-</ol>
-<hr>
-<h2 id="简介">简介</h2>
-<p>tmux is a terminal multiplexer.(终端复用)</p>
-<p>tmux是终端多路复用神器。它允许你在一个终端的多个程序之间轻松切换。</p>
-<p>使用它最直观的好处就是，通过一个终端登录远程主机并运行tmux后，在其中可以开启多个控制台而无需在浪费多余的终端来连接这台远程主机。当我们在tmux中工作的时候，即使关掉连接窗口，再次连接，进入tmux和会话我们之前的工作仍然在继续</p>
-<hr>
-<p><strong>tmux中有三种概念：会话（session），窗口（window），窗格（pane）</strong></p>
-<ul>
-<li>会话有点像是tmux的服务，在后端运行，我们可以通过tmux命令创建这种服务，并且可以通过tmux命令查看，附件到后端允许的会话中。</li>
-<li>一个会话可以包含多个窗口</li>
-<li>一个窗口可以被分割成多个窗格</li>
-</ul>
-<hr>
-<h2 id="会话">会话</h2>
-<p>1.<strong>tmux new -s session1</strong></p>
-<ul>
-<li>新建一个会话，-s (session的首字母)。运行后会从终端环境进入到会话环境。</li>
-<li>当进入到session之后，在下面有一条绿色的状态指示栏，example：[session]0:myserver1*</li>
-<li>依次是当前会话的名字，会话中的窗口序号，以及窗口名字，窗口名字后面有一个星号*,表示是我们操作的当前窗口。</li>
-</ul>
-<p>2.<strong>ctrl+b d</strong></p>
-<ul>
-<li>退出会话，回到shell的终端环境（linux的shell、bash，termial），d是detach(脱离)，但此时tmux的程序还在后端运行。</li>
-</ul>
-<p>3.<strong>tmux ls</strong></p>
-<ul>
-<li>终端环境查看会话列表</li>
-</ul>
-<p>4.<strong>ctrl+b s</strong></p>
-<ul>
-<li>会话环境查看会话列表，且可以通过方向键选择会话并回车，在会话间进行切换</li>
-</ul>
-<p>5.<strong>tmux a -t session1</strong></p>
-<ul>
-<li>从终端环境进入会话，a字母是attach（附加）的头字母，-t 指定要进入的已存在的会话名</li>
-</ul>
-<p>6.<strong>tmux kill-session -t session1</strong></p>
-<ul>
-<li>销毁会话，可以发生在终端环境和会话环境</li>
-<li>在终端直接输入即可，在会话中需要先ctrl+b :（注意冒号），然后输入命令</li>
-</ul>
-<p>7.<strong>tmux rename -t old_session_name new_session_name</strong></p>
-<ul>
-<li>重命名会话，在终端环境中</li>
-</ul>
-<p>8.**ctrl+b $ **</p>
-<ul>
-<li>重命名会话，在会话环境中</li>
-</ul>
-<hr>
-<h2 id="窗口">窗口</h2>
-<p>窗口是我们工作的最小单位</p>
-<p>默认情况下，在一个window中，只有一个大窗格，占满整个窗口区域。</p>
-<p>新建的会话中会默认一个窗口，该窗口名字一般是登陆终端的用户名@主机</p>
-<p>1.<strong>ctrl+b c</strong></p>
-<ul>
-<li>创建窗口，默认情况下创建出来的窗口，由窗口序号+窗口名字组成</li>
-</ul>
-<p>2.<strong>ctr+b ,</strong>（不要忘记逗号）</p>
-<ul>
-<li>重命名窗口</li>
-</ul>
-<p>3.<strong>ctrl+b p/n/0/w/l</strong></p>
-<ul>
-<li>
-<p>窗口切换</p>
-</li>
-<li>
-<p>ctrl+b p (previous的首字母) 切换到上一个window。</p>
-</li>
-<li>
-<p>ctrl+b n (next的首字母) 切换到下一个window。</p>
-</li>
-<li>
-<p>ctrl+b 0 切换到0号window，依次类推，可换成任意窗口序号</p>
-</li>
-<li>
-<p>ctrl+b w (windows的首字母) 列出当前session所有window，通过上、下键切换窗口</p>
-</li>
-<li>
-<p>ctrl+b l (字母L的小写)相邻的window切换</p>
-</li>
-</ul>
-<p>4.<strong>ctrl+&amp;</strong></p>
-<ul>
-<li>关闭当前window，会有y/n的提示</li>
-</ul>
-<hr>
-<h2 id="窗格">窗格</h2>
-<p>tmux的一个窗口，可以被分成多个pane（窗格），可以做出分屏的效果</p>
-<p>1.<strong>ctrl+b %</strong></p>
-<ul>
-<li>垂直分屏</li>
-</ul>
-<p>2.<strong>ctrl+b “</strong></p>
-<ul>
-<li>水平分屏</li>
-<li>分屏之后光标停留在哪个pane上，表示该pane是活动的，另外一般情况下当前pane会被绿色的线条围起来。一般分屏之后当前窗口名字会重置为默认窗口名字。通过多次分屏操作，我们可以得到各种样子的分屏效果</li>
-</ul>
-<p>3.<strong>ctrl+b o/Up/Down/Left/Right/Space/z</strong></p>
-<ul>
-<li>切换pane</li>
-<li>ctrl+b o 依次切换当前窗口下的各个pane</li>
-<li>ctrl+b Up/Down/Left/Right 根据按箭方向选择切换到某个pane</li>
-<li>ctrl+b Space (空格键) 对当前窗口下的所有pane重新排列布局，每按一次，换一种样式。</li>
-<li>ctrl+b z 最大化当前pane。再按一次后恢复。</li>
-</ul>
-<p>4.<strong>ctrl+b x</strong></p>
-<ul>
-<li>关闭当前使用中的pane，操作后有关闭提示</li>
-</ul>
-]]></content>
-    </entry>
-</feed>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://kaiqiangzhao.github.io/tag/kKgvnHWtu/" class="tag">
+                    人工智能
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://kaiqiangzhao.github.io/post/dong-tai-gui-hua-fen-xi-bu-zou/">
+                  <h3 class="post-title">
+                    动态规划分析步骤
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.min.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
