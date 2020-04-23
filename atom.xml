@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://kaiqiangzhao.github.io</id>
     <title>OOK</title>
-    <updated>2020-04-22T16:22:22.635Z</updated>
+    <updated>2020-04-23T15:27:57.337Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://kaiqiangzhao.github.io"/>
     <link rel="self" href="https://kaiqiangzhao.github.io/atom.xml"/>
@@ -10,6 +10,164 @@
     <logo>https://kaiqiangzhao.github.io/images/avatar.png</logo>
     <icon>https://kaiqiangzhao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, OOK</rights>
+    <entry>
+        <title type="html"><![CDATA[python中的__hash__和 __eq__]]></title>
+        <id>https://kaiqiangzhao.github.io/post/python中的__hash__和__eq__/</id>
+        <link href="https://kaiqiangzhao.github.io/post/python中的__hash__和__eq__/">
+        </link>
+        <updated>2020-04-23T00:46:27.000Z</updated>
+        <summary type="html"><![CDATA[<p>python中dict和set的原理是哈希，其背后的实现依靠的是<code>__hash__()</code>和<code>__eq__()</code>方法，本篇文章将会讲解二者在python的dict和set使用，以及如何在自定义类中使用这两个方法。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>python中dict和set的原理是哈希，其背后的实现依靠的是<code>__hash__()</code>和<code>__eq__()</code>方法，本篇文章将会讲解二者在python的dict和set使用，以及如何在自定义类中使用这两个方法。</p>
+<!-- more -->
+<p><strong>Tips:散列表其实是一个稀疏数组，python会设法保证数组内1/3的元素是空的，当快要达到这个阈值的时候，原有的散列表会被复制到一个更大的空间，所以dict和set往往会占用大量内存，如果不是一定需要使用这两类的数据结构，可以使用元组和列表</strong></p>
+<p>先看一个正常的哈希自定义类创建的对象，python3中这个类继承了object的<code>__hash__()</code>方法，hash函数调用的其实就是类的<code>__hash__()</code>方法</p>
+<pre><code class="language-python">class HashTest1:
+    pass
+
+ht1 = HashTest1()
+print(ht1.__hash__)  # &lt;method-wrapper '__hash__' of HashTest1 object at 0x10e112190&gt;
+print(hash(ht1))  # 283185689
+</code></pre>
+<p>那自定义类的<code>__eq__()</code>和<code>__hash__()</code>有什么关系呢?<br>
+如果自定义重载了<code>__eq__()</code>方法, 但没有重载<code>__hash__()</code>, 会将<code>__hash__</code>重置为None</p>
+<pre><code class="language-python">class HashTest2:
+    def __eq__(self, other):
+        if id(self) == id(other):
+            return True
+        else:
+            return False
+
+
+ht2 = HashTest2()
+print(ht2.__hash__)  # Output: None
+# print(hash(ht2))  # Output: TypeError: unhashable type: 'HashTest1'
+</code></pre>
+<p>上面的代码都是在python3下的，python2和python3下的机制有些不同。<br>
+python3的自定义类会默认继承object<br>
+python2的自定义的类没有继承object新式类的时候, 会出现和python3相同的问题。<br>
+但当python2的自定义类继承了object, 重载了<code>__eq__()</code>方法, 但没有重载<code>__hash__()</code>, 依旧可以<br>
+hash成功<br>
+旧式类是没有<code>__hash__</code>, 子类如果想使用<code>__hash__</code>, 必须重写<br>
+新式类有<code>__hash__</code>, 子类重载了<code>__eq__()</code>方法, 但没有重载<code>__hash__()</code>, 不会将<code>__hash__</code>重置为None, 可以使用父类的<code>__hash__</code></p>
+<pre><code class="language-python"># python2 测试
+class OldCls():
+    pass
+
+class NewCls(object):
+    pass
+
+print(type(OldCls()))   # &lt;type 'instance'&gt;
+print(type(NewCls()))   # &lt;class '__main__.NewCls'&gt;
+
+print(OldCls().__hash__)  # AttributeError: OldCls instance has no attribute '__hash__'
+print(NewCls().__hash__)  # &lt;method-wrapper '__hash__' of NewCls object at 0x10a3349d0&gt;
+</code></pre>
+<p>python中哈希集有：set, frozenset, dict<br>
+谈到哈希集还需要说明python中的可变对象和不可变对象<br>
+可变对象: list, dict, set<br>
+不可变对象: tuple, string, int, float, bool</p>
+<ol>
+<li>如果一个对象是不可哈希的, 即没有定义<code>__hash__</code>方法, 其不可被用作哈希集的项</li>
+<li>如果一个对象是可变的, 不管是否实现了<code>__eq__()</code>方法, 都不应该实现<code>__hash__()</code>，因为哈希集要求键是不可变的(如果对象的哈希值发生改变，它将处于错误的哈希桶中)</li>
+</ol>
+<ul>
+<li>如果一个对象是不可哈希的, 即没有定义<code>__hash__</code>方法, 其不可被用作哈希集的项</li>
+</ul>
+<pre><code class="language-python">class HashTest3:
+    __hash__ = None
+
+    def __init__(self):
+        # 将实例的__hash__赋值为None, 是不起作用的, 需要在类内定义
+        # self.__hash__ = None
+        pass
+
+ht3 = HashTest3()
+global_dict = dict()
+global_dict[ht3] = &quot;ht3_value&quot;  # Output: TypeError: unhashable type: 'HashTest3'
+</code></pre>
+<p><strong>注意：</strong><br>
+用户自定义的类默认带有<code>__eq__()</code>和 <code>__hash__()</code> 方法(从父类继承)；<br>
+使用它们与任何对象（自己除外）比较必定不相等，只能自己等于自己,<br>
+并且<code>x.__hash__()</code>会返回一个恰当的值以确保 <code>x == y</code>同时意味着 <code>x is y</code> 且<code>hash(x) == hash(y)</code><br>
+所以自己重写<code>__eq__</code>和<code>__hash__</code>也需要注意, 一旦<code>x==y</code>, 就必须保证<code>hash(x) == hash(y)</code></p>
+<ul>
+<li>如果一个对象是可变的, 不管是否实现了<code>__eq__()</code>方法, 都不应该实现<code>__hash__()</code></li>
+</ul>
+<p>没有实现<code>__eq__</code>: 一旦出现bug, 很难被定位排查，这里的<code>__eq__</code>是继承父类的, 只有自己等于自己, 才返回True, 所以, ht4和ht4_1是不相等的, 对应不同的key</p>
+<pre><code class="language-python">class HashTest4(list):
+    HASHKEY = &quot;hash_key&quot;
+
+    def __hash__(self):
+        return hash(self.HASHKEY)
+
+
+ht4 = HashTest4()
+ht4_1 = HashTest4()
+a = ht4
+ht4.append(1)
+b = ht4
+ht4.append(2)
+print(a, b)  # [1, 2] [1, 2]
+c = ht4_1
+global_dict = dict()
+global_dict[a] = 1
+global_dict[b] = 2
+global_dict[c] = 3
+print(global_dict)  # {[1, 2]: 2, []: 3}
+
+ht4_str = &quot;ht4_str&quot;
+a = ht4_str
+ht4_str = &quot;new_ht4_str&quot;
+b = ht4_str
+print(a, b)  # ht4_str new_ht4_str
+
+global_dict = dict()
+global_dict[a] = 1
+global_dict[b] = 2
+print(global_dict)  # {'ht4_str': 1, 'new_ht4_str': 2}
+</code></pre>
+<p>实现了<code>__eq__</code>：哈希集判断两个key是否相等, 需要满足hash值相同和eq执行后的结果相同</p>
+<pre><code>class HashTest5:
+    HASHKEY = &quot;hash_key&quot;
+
+    def __init__(self, val):
+        self.val = val
+
+    def __hash__(self):
+        return hash(self.HASHKEY)
+
+    def __eq__(self, other):
+        if self.val == other.val:
+            return True
+        else:
+            return False
+
+ht5_1 = HashTest5(1)
+ht5_2 = HashTest5(1)
+ht5_3 = HashTest5(2)
+
+global_dict = dict()
+global_dict[ht5_1] = 1
+global_dict[ht5_2] = 2
+global_dict[ht5_3] = 3
+# ht5_1和ht5_2的hash值相同和eq相等, 代表是同一个key
+print(global_dict)  # {&lt;__main__.HashTest5 object at 0x109dd53d0&gt;: 2, &lt;__main__.HashTest5 object at 0x109dd5450&gt;: 3}
+</code></pre>
+<h2 id="总结">总结</h2>
+<p>所以: <code>__hash__</code>是为了找到哈希桶的位置, 如果桶内没有值, 直接存入,<br>
+如果有数值, 需要<code>__eq__</code>来判断桶内的key中是否相同, 如果相同就重置, 否则开辟新的空间存数值<br>
+桶内不仅记录key值也记录value值, hash是根据key找到对应的桶<br>
+哈希集判断两个key是否相等, 需要满足hash值相同和eq执行后的结果相同<br>
+形象的说, 就是<code>__hash__</code>方法定义如何寻找桶的位置, <code>__eq__</code>定义桶的名字是否是一样的</p>
+<p><strong>__eq__的引申</strong><br>
+is比较的是对象的标识(引用)，直接调用id()函数来比较两者的大小<br>
+<code>==</code>比较的是对象的值，调用的是<code>__eq__()</code>方法<br>
+如果一个类继承的是objects，那==比较的也是两个对象的ID，和is一样<br>
+但是多数内置类型都重写了<code>__eq__()</code>方法，会考虑对象属性的值</p>
+<p>参考文献：官方文档: https://docs.python.org/zh-cn/3.7/reference/datamodel.html#object.<strong>hash</strong></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[贝叶斯公式]]></title>
         <id>https://kaiqiangzhao.github.io/post/bei-xie-si-gong-shi/</id>
