@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://ookcafe.com</id>
+    <id>https://kaiqiangzhao.github.io</id>
     <title>OOK</title>
-    <updated>2020-05-05T05:47:37.313Z</updated>
+    <updated>2020-05-05T05:49:35.424Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://ookcafe.com"/>
-    <link rel="self" href="https://ookcafe.com/atom.xml"/>
+    <link rel="alternate" href="https://kaiqiangzhao.github.io"/>
+    <link rel="self" href="https://kaiqiangzhao.github.io/atom.xml"/>
     <subtitle>Simpler life, Deeper mind.</subtitle>
-    <logo>https://ookcafe.com/images/avatar.png</logo>
-    <icon>https://ookcafe.com/favicon.ico</icon>
+    <logo>https://kaiqiangzhao.github.io/images/avatar.png</logo>
+    <icon>https://kaiqiangzhao.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, OOK</rights>
     <entry>
         <title type="html"><![CDATA[python中的__hash__和 __eq__]]></title>
-        <id>https://ookcafe.com/post/python中的__hash__和__eq__/</id>
-        <link href="https://ookcafe.com/post/python中的__hash__和__eq__/">
+        <id>https://kaiqiangzhao.github.io/post/python中的__hash__和__eq__/</id>
+        <link href="https://kaiqiangzhao.github.io/post/python中的__hash__和__eq__/">
         </link>
         <updated>2020-04-23T00:46:27.000Z</updated>
         <summary type="html"><![CDATA[<p>python中dict和set的原理是哈希，其背后的实现依靠的是<code>__hash__()</code>和<code>__eq__()</code>方法，本篇文章将会讲解二者在python的dict和set使用，以及如何在自定义类中使用这两个方法。</p>
@@ -170,8 +170,8 @@ is比较的是对象的标识(引用)，直接调用id()函数来比较两者的
     </entry>
     <entry>
         <title type="html"><![CDATA[贝叶斯公式]]></title>
-        <id>https://ookcafe.com/post/bei-xie-si-gong-shi/</id>
-        <link href="https://ookcafe.com/post/bei-xie-si-gong-shi/">
+        <id>https://kaiqiangzhao.github.io/post/bei-xie-si-gong-shi/</id>
+        <link href="https://kaiqiangzhao.github.io/post/bei-xie-si-gong-shi/">
         </link>
         <updated>2020-04-21T00:39:48.000Z</updated>
         <summary type="html"><![CDATA[<p>数学中的哲学</p>
@@ -252,8 +252,8 @@ P(A|B) 表示在B发生的前提下发生A的概率，若A，B两个事件独立
     </entry>
     <entry>
         <title type="html"><![CDATA[MySQL client ran out of memory]]></title>
-        <id>https://ookcafe.com/post/mysql-client-ran-out-of-memory/</id>
-        <link href="https://ookcafe.com/post/mysql-client-ran-out-of-memory/">
+        <id>https://kaiqiangzhao.github.io/post/mysql-client-ran-out-of-memory/</id>
+        <link href="https://kaiqiangzhao.github.io/post/mysql-client-ran-out-of-memory/">
         </link>
         <updated>2020-04-20T09:31:40.000Z</updated>
         <summary type="html"><![CDATA[<p>访问网站，调试控制台报出的504 (gateway time-out)错误</p>
@@ -301,8 +301,8 @@ proxy_read_timeout 60;
     </entry>
     <entry>
         <title type="html"><![CDATA[动态规划分析步骤]]></title>
-        <id>https://ookcafe.com/post/dong-tai-gui-hua-fen-xi-bu-zou/</id>
-        <link href="https://ookcafe.com/post/dong-tai-gui-hua-fen-xi-bu-zou/">
+        <id>https://kaiqiangzhao.github.io/post/dong-tai-gui-hua-fen-xi-bu-zou/</id>
+        <link href="https://kaiqiangzhao.github.io/post/dong-tai-gui-hua-fen-xi-bu-zou/">
         </link>
         <updated>2020-04-12T09:17:54.000Z</updated>
         <summary type="html"><![CDATA[<p>分析一个问题是否可以采用动态规划求解，以及如何求解</p>
@@ -390,8 +390,8 @@ proxy_read_timeout 60;
     </entry>
     <entry>
         <title type="html"><![CDATA[分布式事务中可靠的消息投递机制]]></title>
-        <id>https://ookcafe.com/post/fen-bu-shi-shi-wu-de-ke-kao-de-xiao-xi-tou-di-ji-zhi/</id>
-        <link href="https://ookcafe.com/post/fen-bu-shi-shi-wu-de-ke-kao-de-xiao-xi-tou-di-ji-zhi/">
+        <id>https://kaiqiangzhao.github.io/post/fen-bu-shi-shi-wu-de-ke-kao-de-xiao-xi-tou-di-ji-zhi/</id>
+        <link href="https://kaiqiangzhao.github.io/post/fen-bu-shi-shi-wu-de-ke-kao-de-xiao-xi-tou-di-ji-zhi/">
         </link>
         <updated>2020-04-11T03:03:11.000Z</updated>
         <content type="html"><![CDATA[<p>消费者消费消息告知消息队列的两种机制：<br>
@@ -401,13 +401,13 @@ proxy_read_timeout 60;
 <p>按理说，手动应答机制也可以实现消息的最终一致性，但可能导致消息队列性能下降，堆积大量失败消息。且其只能保证消费者和消息队列之前的消息的可靠投递。在消息的提供者和消息队列间，有可能出现消息写入消息队列失败，这样消息就会丢失。</p>
 <p>问题的关键就在于上游服务对下游服务不管不顾。</p>
 <p>消息传递形成闭环，即正反向消息机制，上游要知晓下游执行结果，并采取补偿机制，从而实现最终一致性，其中可能会出现消息重复投递的情况，要保证幂等性，可查阅之前的文章。</p>
-<figure data-type="image" tabindex="1"><img src="https://ookcafe.com/post-images/1586575437620.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://kaiqiangzhao.github.io/post-images/1586575437620.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[如何保证幂等性]]></title>
-        <id>https://ookcafe.com/post/ru-he-bao-zheng-mi-deng-xing/</id>
-        <link href="https://ookcafe.com/post/ru-he-bao-zheng-mi-deng-xing/">
+        <id>https://kaiqiangzhao.github.io/post/ru-he-bao-zheng-mi-deng-xing/</id>
+        <link href="https://kaiqiangzhao.github.io/post/ru-he-bao-zheng-mi-deng-xing/">
         </link>
         <updated>2020-04-09T14:28:01.000Z</updated>
         <summary type="html"><![CDATA[<p>保证幂等性的四种方式</p>
@@ -450,8 +450,8 @@ proxy_read_timeout 60;
     </entry>
     <entry>
         <title type="html"><![CDATA[建站历险记]]></title>
-        <id>https://ookcafe.com/post/jian-zhan-li-xian-ji/</id>
-        <link href="https://ookcafe.com/post/jian-zhan-li-xian-ji/">
+        <id>https://kaiqiangzhao.github.io/post/jian-zhan-li-xian-ji/</id>
+        <link href="https://kaiqiangzhao.github.io/post/jian-zhan-li-xian-ji/">
         </link>
         <updated>2020-04-06T08:04:49.000Z</updated>
         <summary type="html"><![CDATA[<p>个人blog建站历险记</p>
@@ -486,8 +486,8 @@ typecho的搭建也不复杂，就是没有找到自己喜欢的主题，然后�
     </entry>
     <entry>
         <title type="html"><![CDATA[tmux-终端复用]]></title>
-        <id>https://ookcafe.com/post/tmux-zhong-duan-fu-yong/</id>
-        <link href="https://ookcafe.com/post/tmux-zhong-duan-fu-yong/">
+        <id>https://kaiqiangzhao.github.io/post/tmux-zhong-duan-fu-yong/</id>
+        <link href="https://kaiqiangzhao.github.io/post/tmux-zhong-duan-fu-yong/">
         </link>
         <updated>2018-12-17T15:16:55.000Z</updated>
         <summary type="html"><![CDATA[<p>linux 下的终端复用工具，一般用来跑后台程序，以防网络中断，退出会话，导致程序终止。</p>
