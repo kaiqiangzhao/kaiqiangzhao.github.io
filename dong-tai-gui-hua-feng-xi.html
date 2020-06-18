@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="OOK">
-  <meta name="description" content="Posts in the misc section of this site">
+  <meta name="description" content="动态规划分析 | 动态规划 重叠子问题 最优子问题 状态转移方程 分析过程 备忘录和db table 重叠子问题 问题可以被拆分为多个子问题 多个子问题存在重复求解 可以使用备忘录或db table 最优子问题 问题最优解可以被拆分为多个子问题的最优解 多个子问题的最优解不存在互相制约 状态转移方程...">
 
   <link rel="icon" type="image/png" href="/theme/imgs/favicon.ico" sizes="32x32">
 
@@ -20,8 +20,10 @@
   <script type="text/javascript" src="/theme/js/functions.js"></script>
 
 
+<meta name="keywords" content="算法">
 
-  <title>Category: misc | ookcafe</title>
+
+  <title>动态规划分析</title>
 
   
 </head>
@@ -82,36 +84,103 @@
             <div id="primary" class="content-area">
               <div id="main" class="site-main" role="main">
                 <div class="article-container">
-<article class="post">
-	<div class="blog-item-wrap">
-		<div class="post-inner-content">
-			<header class="entry-header page-header">
-				<span class="cat-item"><time datetime="2020-04-21 08:39:48+08:00">2020-04-21</time></span>
-				<h1 class="entry-title"><a href="/bei-ye-shi-gong-shi.html">贝叶斯公式</a></h1>
-			</header><!-- .entry-header -->
-			<div class="entry-content">
-                &emsp;&emsp;在讲贝叶斯公式之前，需要先讲解两个概率公式 - 条件概率公式 - 全概率公式 条件概率 下面是条件概率的公式： 公式1：P(A|B) = P(AB) / P(B) 若条件B的发生与否对事件A无任何影响，则可认为A，B两个事件独立。 P(A|B) 表示在B发生的前提下发生A的...
-        	</div><!-- .entry-content -->
-		</div>
-	</div>
-</article><!-- #post-## -->
-<article class="post">
-	<div class="blog-item-wrap">
-		<div class="post-inner-content">
-			<header class="entry-header page-header">
-				<span class="cat-item"><time datetime="2020-04-12 17:17:54+08:00">2020-04-12</time></span>
-				<h1 class="entry-title"><a href="/dong-tai-gui-hua-feng-xi.html">动态规划分析</a></h1>
-			</header><!-- .entry-header -->
-			<div class="entry-content">
-                &emsp;&emsp;动态规划 重叠子问题 最优子问题 状态转移方程 分析过程 备忘录和db table 重叠子问题 问题可以被拆分为多个子问题 多个子问题存在重复求解 可以使用备忘录或db table 最优子问题...
-        	</div><!-- .entry-content -->
-		</div>
-	</div>
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-12 17:17:54+08:00">2020-04-12</time></span>
+        <h1 class="entry-title"><a href="/dong-tai-gui-hua-feng-xi.html">动态规划分析</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="/dong-tai-gui-hua-feng-xi.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h3>动态规划</h3>
+<ul>
+<li>重叠子问题</li>
+<li>最优子问题</li>
+<li>状态转移方程</li>
+<li>分析过程</li>
+<li>备忘录和db table</li>
+</ul>
+<hr>
+<h3>重叠子问题</h3>
+<p>问题可以被拆分为多个子问题</p>
+<p>多个子问题存在重复求解</p>
+<p>可以使用备忘录或db table</p>
+<h3>最优子问题</h3>
+<p>问题最优解可以被拆分为多个子问题的最优解</p>
+<p>多个子问题的最优解不存在互相制约</p>
+<h3>状态转移方程</h3>
+<p>问题可以被拆分为多个子问题可以使用方程表示</p>
+<hr>
+<h3>分析过程</h3>
+<p>首先要知道，动态规划一定需要遍历全部可能，并且需要递归的去遍历全部可能</p>
+<ul>
+<li>明确状态(确定问题可以拆分的变量, 这些变量可以传进子问题)</li>
+<li>定义函数的含义(写出简单的函数结构)</li>
+<li>最子问题的返回结果进行什么操作</li>
+<li>
+<p>确定问题边界(递归退出边界)</p>
+</li>
+<li>
+<p>明确状态(变化的变量)</p>
+</li>
+</ul>
+<p>​      f(n) = f(n-1) + f(n-2), 那就是变量n在变化，并在子问题传递</p>
+<ol>
+<li>定义函数含义</li>
+</ol>
+<p>​      def dp(n): return res; dp函数的含义，在n的时候，返回res（int，list，dict等）</p>
+<ol>
+<li>最子问题的返回结果进行什么操作</li>
+</ol>
+<p>​     dp(n-1), dp(n-2)等返回的结果需要进行怎样的操作，加，减，比大小，取最小，取最大等</p>
+<ol>
+<li>确定问题边界(递归退出边界)</li>
+</ol>
+<p>​      n = 0，n = -1等边界值要确定，正确退出递归</p>
+<hr>
+<h3>备忘录和db table</h3>
+<p><strong>找零钱问题</strong></p>
+<p>给总金额amount，从k中面值的硬币，面值为c1,c2,c3,,,，问最少需要几枚硬币凑出这个金额，如果不能凑出，算法返回-1。</p>
+<p>如 k=3 ， 面值分别为1，2，5，总金额amount=11.最少需要3枚硬币凑出, 11=5+5+1。</p>
+<p>问题分析：</p>
+<p>想要知道11最少需要几枚硬币，则分别计算出10，8， 6最少需要的硬币数，取最小，结果+1就是答案</p>
+<ol>
+<li>
+<p>依次类推，所以可以拆分为子问题，变量为总金额</p>
+</li>
+<li>
+<p>定义函数dp(amount), 输入总金额，返回最少需要的硬币数</p>
+</li>
+<li>
+<p>返回的最小硬币数，需要执行哪些操作，取最小min</p>
+</li>
+<li>
+<p>边界，amount&lt;0, 不存在，==0. 存在</p>
+</li>
+<li>
+<p>备忘录</p>
+</li>
+</ol>
+<p>备忘录一般采用dict记录，其中的key是我们关心的变量，value是计算的结果</p>
+<p>那key就是amount，计算结果就是最小个数</p>
+<p>备忘录一般都是自顶向下求解，</p>
+<ul>
+<li>db table</li>
+</ul>
+<p>db table 一般使用一维，二维数组来计算，需要将数组的下标和变量进行关联，下标对应的值就是计算结果。</p>
+<p>在找零钱中，下标就是备忘录的变量amount，下标对应的值就是最小个数</p>
+<p>db table 一般都是自底向上求解的。</p>
+<p>在找零钱中，需要先计算总金额为0元，1元，2元，最后到给定的总额度</p>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="/tag/suan-fa.html">算法</a>      </div>
+    </div>
+  </div>
 </article><!-- #post-## -->
                 </div>
-<footer>
-</footer>
-<div class="article_meta"></div>
               </div><!-- #main -->
           </div><!-- #primary -->
         </div>
@@ -147,6 +216,7 @@
       window.scroll(0, document.getElementById('main').offsetTop);
     }})
   </script>
+
 
 
 
