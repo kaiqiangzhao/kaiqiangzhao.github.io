@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="OOK">
+  <meta name="description" content="贝叶斯公式 | 在讲贝叶斯公式之前，需要先讲解两个概率公式 - 条件概率公式 - 全概率公式 条件概率 下面是条件概率的公式： 公式1：P(A|B) = P(AB) / P(B) 若条件B的发生与否对事件A无任何影响，则可认为A，B两个事件独立。 P(A|B)...">
+
+  <link rel="icon" type="image/png" href="/theme/imgs/favicon.ico" sizes="32x32">
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/theme/js/functions.js"></script>
+
+
+<meta name="keywords" content="人工智能">
+
+
+  <title>贝叶斯公式</title>
+
+  
+</head>
+
+<body class="home blog">
+
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="/index.html" >首页
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/about-me.html" >关于
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/archives.html" >归档
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/tags.html" >标签
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/个人语录.html" >个人语录
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://github.com/kaiqiangzhao" title="github" >
+<i class="fa iconfont fa-lg">&#xe85a;</i></a>
+                <a href="#mail" title="email" >
+<i class="fa iconfont fa-lg">&#xe667;</i></a>
+                <a href="https://www.zhihu.com/people/ooker" title="zhihu" >
+<i class="fa iconfont fa-lg">&#xe709;</i></a>
+               <a class="my-avatar" href="">
+                   <i class="fa fa-lg"><img src="/theme/imgs/avator.jpeg" class="attachment-full size-full" alt="logo"></i>
+               </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+    </header><!-- #masthead -->
+  </div>
+
+  <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-21 08:39:48+08:00">2020-04-21</time></span>
+        <h1 class="entry-title"><a href="/bei-ye-shi-gong-shi.html">贝叶斯公式</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="/bei-ye-shi-gong-shi.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>在讲贝叶斯公式之前，需要先讲解两个概率公式
+- 条件概率公式
+- 全概率公式</p>
+<h2>条件概率</h2>
+<p>下面是条件概率的公式：
+公式1：<code>P(A|B) = P(AB) / P(B)</code>                        </p>
+<p>若条件B的发生与否对事件A无任何影响，则可认为A，B两个事件独立。
+P(A|B) 表示在B发生的前提下发生A的概率，若A，B两个事件独立，<code>P(A) = P(A|B)</code>
+公式2：<code>P(A) = P(A|B)</code></p>
+<p>由公式1和2可以推出公式3：<code>P(AB) = P(A)P(B)</code>
+公式3是概率的乘法公式，也是<strong>独立性</strong>的定义</p>
+<div class="highlight"><pre><span></span><span class="err">事件间的独立性和互斥是不同的概念：</span>
+<span class="err">例如：</span>
+<span class="err">抛硬币一次：出现正面和出现反面就是互斥事件；</span>
+<span class="err">抛硬币两次：第一次的结果不会影响第二次的抛掷结果，这是独立事件</span>
+</pre></div>
+
+
+<p>独立事件满足概率的乘法定理，即概率相乘求独立。
+互斥事件满足概率的加法定理，即概率相加求互斥。</p>
+<h2>全概率公式</h2>
+<p>设$B_{1}$, $B_{2}$...$B_{n}$为有限个或无限个事件，他们两两互斥，且每次实验中至少发生一个
+用公式表示为 $B_{i}$ * $B_{j}$ = $\emptyset$(不可能事件) $i \neq j$</p>
+<p>若 $B_{1}$ + $B_{2}$ + ... + $B_{n}$ = $\Omega$ (必然事件)， 则称 $B_{1},B_{2},...,B_{n}$为一个完备的事业群</p>
+<p>于是乎：
+$A = A\Omega = AB_{1} + AB_{2} + ... + AB_{n}$</p>
+<p>$P(A) = P(AB_{1}) + P(AB_{2}) + ... + P(AB_{n})$</p>
+<p>再由条件概率公式 <code>P(A|B) = P(AB) / P(B)</code> 变形得出 </p>
+<p><code>P(AB) = P(A|B) * P(B) = P(B|A) * P(A)</code>：</p>
+<p>于是有：
+$P(A) = P(B_{1})P(A|B_{1}) + P(B_{2})P(A|B_{2}) + ... + P(B_{n})P(A|B_{n})$</p>
+<p><strong>应用场景</strong>
+在复杂的情况下直接算P(A)不容易，但A伴随某个事件$B_{i}$发生，适当构造一组$B_{i}$往往可以简化计算。</p>
+<h2>贝叶斯公式</h2>
+<p>在上面的公式中，我们把B称为因，A称为果，由因推果是符合我们正常逻辑的。然而贝叶斯公式却是由果推因，颇具哲学意味。</p>
+<p>由条件概率和全概率公式，可推：</p>
+<p>$P(B_{i}|A) = P(AB_{i}) / P(A) = P(B_{i})P(A|B_{i}) / \sum P(B_{j})P(A|B_{j})$</p>
+<p>由公式可以看出，<code>由果推因</code> 全部转换为了 <code>由因推果</code></p>
+<p>因为$B_{i}$是原因，其发生概率已知，我们P($B_{i}$) 称为$B_{i}$的先验概率。
+$P(B|A)$是已知B发生后，A的条件概率。也由于得自B的取值而被称作A的后验概率。</p>
+<p>贝叶斯公式就是现在有一个结果A发生了，在众多可能的原因中找到底哪个原因导致了这个结果。</p>
+<p>举个例子：
+假设现在有三个盒子C1，C2, C3。其中C1里面有80个白球，10个黑球，10个红球。C2中有10个白球，10个黑球，10个红球。C3中有10个白球，80个黑球，10个红球。</p>
+<p>设事件$B_{i}$为抽对应下标的盒子，事件A为抽出的球是白球
+$P(B_{1}) = 1/3$
+$P(B_{2}) = 1/3$
+$P(B_{3}) = 1/3$</p>
+<p>$P(A|B_{1}) = 0.8$
+$P(A|B_{2}) = 0.1$
+$P(A|B_{3}) = 0.1$</p>
+<p>$P(B_{1}|A) = P(A|B_{1}) / \sum P(B_{j})P(A|B_{j}) = 0.8*(1/3)/(1/3) = 0.8$
+$P(B_{2}|A) = 0.1$
+$P(B_{3}|A) = 0.1$</p>
+<p>所以现在假设我们抽出一个球是白色的，则这个白球来自于哪个盒子呢？
+答案就是概率最大的C1。</p>
+<h2>朴素贝叶斯</h2>
+<p>P(B|A) = P(A|B)P(B) / P(A)</p>
+<p>也就是</p>
+<p>P(类别|特征) = P(特征|类别)P(类别) / P(特征)</p>
+<p>其中B是类别，各个类别直接互斥，具有先验概率
+<strong>似然</strong>指的是用频率去代替概率，我们需要的数据集，包括特征和类别，从中统计某个类别出现的次数来表示其概率，这也是我们为什么需要大量的数据，就是为了让频率更加接近概率。</p>
+<p><strong>条件独立性假设</strong>
+$P(A_{1}, A_{2}, ..., A_{n} | B) = P(A_{1}|B) * P(A_{2}|B) <em>...</em>P(A_{n}|B)$</p>
+<p>朴素贝叶斯有一个极强的假设就是各个特征间互相独立，例如，年龄，收入，学历，虽然现实中某些特征具有联系，也就是非独立的，但如果不这样假设，会出现大量的可组合类别，计算机就无法进行计算了。</p>
+<p>假设$A_{1}, A_{2}, ..., A_{n}$ 的取值有两种可能
+如果条件不独立，即互相之间有关系，则
+$P(A_{1}, A_{2}, ..., A_{n} | B) = P(A_{1x}, A_{2x}, ..., A_{nx}|B) + P(A_{1y}, A_{2x}, ..., A_{nx}|B) + P(A_{1y}, A_{2y}, ..., A_{nx}|B)$</p>
+<p>这样会有2的n次方的概率要求解，计算机无法满足，由于组合太多，有写特征的组合在数据集中出现的次数很少，甚至不出现，所以其概率会为0.</p>
+<h2>总结</h2>
+<p>朴素贝叶斯的计算，P(A)使用全概率公式计算，P(A|B)使用条件独立性假设公式计算，P(B)就用样本数占总样本的比例来代替，就可以得到结果。</p>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="/tag/ren-gong-zhi-neng.html">人工智能</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+  <div id="mail" class="overlay">
+      <div class="popup">
+          <a class="close" href="#">×</a>
+          <div id="popup_content"></div>
+      </div>
+  </div>
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="/pages/terms-and-conditions">Terms & Conditions</a><br />
+                    This site uses the <a href="https://github.com/limbenjamin/voce">voce</a> theme by <a href="//limbenjamin.com/">Benjamin Lim</a><br />
+                    &copy; 2020 <a href="">OOK</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>
