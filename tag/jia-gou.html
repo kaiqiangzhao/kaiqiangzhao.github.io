@@ -90,7 +90,7 @@
 				<h1 class="entry-title"><a href="/feng-bu-si-xiao-xi-tou-di.html">分布式事务中可靠的消息投递机制</a></h1>
 			</header><!-- .entry-header -->
 			<div class="entry-content">
-                &emsp;&emsp;消费者消费消息告知消息队列的两种机制： 自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败 手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息 当消费者服务采取了限流措施，可能导致消息失败消费多次，从而进入死信队列，这时候需要人工干预来处理这些位于死信队列的消息。 按理说，手动应答机制也可以实现消息的最终一致性，但可能导致消...
+                &emsp;&emsp;消费者消费消息告知消息队列的两种机制： 自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败 手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息 当消费者服务采取了限流措施，可能导致消息失败消费多次，从而进入死信队列，这时候需要人工干预来处理...
         	</div><!-- .entry-content -->
 		</div>
 	</div>
@@ -103,13 +103,22 @@
 				<h1 class="entry-title"><a href="/ru-he-bao-zheng-mi-deng-xing.html">如何保证幂等性</a></h1>
 			</header><!-- .entry-header -->
 			<div class="entry-content">
-                &emsp;&emsp;保证幂等性的四种方式 创建唯一索引 先select, 后insert 分布式锁(redis) 状态机 1. 创建唯一索引 如退款服务，调用支付服务，完成退款。 可以使用退款编码作为出账流水表的唯一索引。 当支付服务进行退款操作，创建出账流水时，如果已完成...
+                &emsp;&emsp;保证幂等性的四种方式 创建唯一索引 先select, 后insert 分布式锁(redis) 状态机 1. 创建唯一索引 如退款服务，调用支付服务，完成退...
         	</div><!-- .entry-content -->
 		</div>
 	</div>
 </article><!-- #post-## -->
                 </div>
 <footer>
+<div id="paginator">
+  <span id="left">
+  </span>
+  <span id="right">
+  </span>
+  <div>
+      <a href="/tag/jia-gou.html">[1]</a>
+  </div>
+</div>
 </footer>
 <div class="article_meta"></div>
               </div><!-- #main -->
