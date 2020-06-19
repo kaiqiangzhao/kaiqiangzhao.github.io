@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="OOK">
-  <meta name="description" content="A listing of all articles on this site">
+  <meta name="description" content="如何保证幂等性 | 保证幂等性的四种方式 创建唯一索引 先select, 后insert 分布式锁(redis) 状态机 1. 创建唯一索引 如退款服务，调用支付服务，完成退款。 可以使用退款编码作为出账流水表的唯一索引。...">
 
   <link rel="icon" type="image/png" href="/theme/imgs/favicon.ico" sizes="32x32">
 
@@ -20,9 +20,10 @@
   <script type="text/javascript" src="/theme/js/functions.js"></script>
 
 
-  <meta name="keywords" content="life, python, 人工智能, 数据库, 算法, 架构, 其他, linux">
+<meta name="keywords" content="架构">
 
-  <title>Archive</title>
+
+  <title>如何保证幂等性</title>
 
   
 </head>
@@ -84,36 +85,55 @@
               <div id="main" class="site-main" role="main">
                 <div class="article-container">
 <article>
-  <div class="article_text">
-    <dl>
-        <h2>2020</h2>
-          <h3>六月</h3>
-          <ul>
-              <li><time datetime="2020-06-16T19:09:48+08:00"> 6 16, 2020</time> - <a href="/ge-ren-yu-lu.html">个人语录</a></li>
-          </ul>
-          <h3>四月</h3>
-          <ul>
-              <li><time datetime="2020-04-23T08:46:27+08:00"> 4 23, 2020</time> - <a href="/python-hash-eq.html">python中的__hash__和 __eq__</a></li>
-              <li><time datetime="2020-04-21T08:39:48+08:00"> 4 21, 2020</time> - <a href="/bei-ye-shi-gong-shi.html">贝叶斯公式</a></li>
-              <li><time datetime="2020-04-20T17:31:40+08:00"> 4 20, 2020</time> - <a href="/mysql-client-oom.html">MySQL client ran out of memory</a></li>
-              <li><time datetime="2020-04-12T17:17:54+08:00"> 4 12, 2020</time> - <a href="/dong-tai-gui-hua-feng-xi.html">动态规划分析</a></li>
-              <li><time datetime="2020-04-11T11:03:11+08:00"> 4 11, 2020</time> - <a href="/feng-bu-si-xiao-xi-tou-di.html">分布式事务中可靠的消息投递机制</a></li>
-              <li><time datetime="2020-04-09T22:28:01+08:00"> 4 09, 2020</time> - <a href="/ru-he-bao-zheng-mi-deng-xing.html">如何保证幂等性</a></li>
-              <li><time datetime="2020-04-06T16:04:49+08:00"> 4 06, 2020</time> - <a href="/jian-zhan-li-xian-ji.html">建站历险记</a></li>
-          </ul>
-        <h2>2018</h2>
-          <h3>十二月</h3>
-          <ul>
-              <li><time datetime="2018-12-17T23:16:55+08:00">12 17, 2018</time> - <a href="/tmux-zhong-duan-fu-yong.html">tmux-终端复用</a></li>
-          </ul>
-          <h3>十月</h3>
-          <ul>
-              <li><time datetime="2018-10-06T19:09:48+08:00">10 06, 2018</time> - <a href="/about-me.html">About Me</a></li>
-          </ul>
-    </dl>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-09 22:28:01+08:00">2020-04-09</time></span>
+        <h1 class="entry-title"><a href="/ru-he-bao-zheng-mi-deng-xing.html">如何保证幂等性</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="/ru-he-bao-zheng-mi-deng-xing.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h2>保证幂等性的四种方式</h2>
+<ol>
+<li>创建唯一索引</li>
+<li>先select, 后insert</li>
+<li>分布式锁(redis)</li>
+<li>状态机</li>
+</ol>
+<hr>
+<h2>1. 创建唯一索引</h2>
+<p>如退款服务，调用支付服务，完成退款。
+可以使用退款编码作为出账流水表的唯一索引。
+当支付服务进行退款操作，创建出账流水时，如果已完成退款，会因为唯一索引重复而创建失败</p>
+<p>如果分库分表，不同库表的唯一索引不同步，可能造成在不同的库表重复创建退款记录。</p>
+<h2>2. 先select, 后insert</h2>
+<p>那就不能直接创建，需要先查询所有库表内有没有约束索引，没有的话再创建出账流水。</p>
+<p>但是查询和插入不是原子操作，不同的线程都可以执行查询操作，然后进入同一片临界区，如常用的if语句。
+然后都执行了插入操作。</p>
+<h2>3. 分布式锁</h2>
+<p>插入更新操作前需要先获取到锁。此时不需要对查询加锁，因为多个线程都查询后，进入临界区，执行插入操作，没有获得锁的全部按失效处理后退出。
+常用有redis分布式锁。
+上锁命令为<code>setnx  key</code>(set if not exists)
+去锁命令为<code>del key</code></p>
+<p>redis实现分布式锁存在下面三个问题</p>
+<p><strong>问题1：</strong>
+为了避免因为异常，导致释放锁失败，需要给锁加上过期时间<code>expire key 5</code></p>
+<p><strong>问题2：</strong>
+但是这里也存在一个问题，就是<code>setnx key</code>和<code>expire key 5</code>命令中间redis服务器发生宕机，这样也可能出现死锁。
+可以使用一下命令，将二者绑定为原子操作<code>set key true ex 5 nx</code></p>
+<p><strong>问题3：</strong>
+还有一个问题就是，锁过期时间不能小于业务执行时间，一般的业务操作会放入消息队列里等待执行，如果<code>del key</code>操作之前锁过期了，就无法串行执行，依旧会出现非幂等数据。</p>
+<h2>4. 状态机</h2>
+<p>执行操作前先判断资源的状态是否符合状态流转的条件，不要在代码里面<code>if</code>判断，否则又会陷入上面第二个问题。将状态判断交给数据库，靠数据库本身的锁机制进行控制。</p>
+<p><code>update order set status=1 where status=2</code></p>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="/tag/jia-gou.html">架构</a>      </div>
+    </div>
   </div>
-  <div class="article_meta"></div>
-</article>
+</article><!-- #post-## -->
                 </div>
               </div><!-- #main -->
           </div><!-- #primary -->
@@ -150,6 +170,7 @@
       window.scroll(0, document.getElementById('main').offsetTop);
     }})
   </script>
+
 
 
 

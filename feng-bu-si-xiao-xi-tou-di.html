@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="OOK">
-  <meta name="description" content="A listing of all articles on this site">
+  <meta name="description" content="分布式事务中可靠的消息投递机制 | 消费者消费消息告知消息队列的两种机制： 自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败 手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息...">
 
   <link rel="icon" type="image/png" href="/theme/imgs/favicon.ico" sizes="32x32">
 
@@ -20,9 +20,10 @@
   <script type="text/javascript" src="/theme/js/functions.js"></script>
 
 
-  <meta name="keywords" content="life, python, 人工智能, 数据库, 算法, 架构, 其他, linux">
+<meta name="keywords" content="架构">
 
-  <title>Archive</title>
+
+  <title>分布式事务中可靠的消息投递机制</title>
 
   
 </head>
@@ -84,36 +85,30 @@
               <div id="main" class="site-main" role="main">
                 <div class="article-container">
 <article>
-  <div class="article_text">
-    <dl>
-        <h2>2020</h2>
-          <h3>六月</h3>
-          <ul>
-              <li><time datetime="2020-06-16T19:09:48+08:00"> 6 16, 2020</time> - <a href="/ge-ren-yu-lu.html">个人语录</a></li>
-          </ul>
-          <h3>四月</h3>
-          <ul>
-              <li><time datetime="2020-04-23T08:46:27+08:00"> 4 23, 2020</time> - <a href="/python-hash-eq.html">python中的__hash__和 __eq__</a></li>
-              <li><time datetime="2020-04-21T08:39:48+08:00"> 4 21, 2020</time> - <a href="/bei-ye-shi-gong-shi.html">贝叶斯公式</a></li>
-              <li><time datetime="2020-04-20T17:31:40+08:00"> 4 20, 2020</time> - <a href="/mysql-client-oom.html">MySQL client ran out of memory</a></li>
-              <li><time datetime="2020-04-12T17:17:54+08:00"> 4 12, 2020</time> - <a href="/dong-tai-gui-hua-feng-xi.html">动态规划分析</a></li>
-              <li><time datetime="2020-04-11T11:03:11+08:00"> 4 11, 2020</time> - <a href="/feng-bu-si-xiao-xi-tou-di.html">分布式事务中可靠的消息投递机制</a></li>
-              <li><time datetime="2020-04-09T22:28:01+08:00"> 4 09, 2020</time> - <a href="/ru-he-bao-zheng-mi-deng-xing.html">如何保证幂等性</a></li>
-              <li><time datetime="2020-04-06T16:04:49+08:00"> 4 06, 2020</time> - <a href="/jian-zhan-li-xian-ji.html">建站历险记</a></li>
-          </ul>
-        <h2>2018</h2>
-          <h3>十二月</h3>
-          <ul>
-              <li><time datetime="2018-12-17T23:16:55+08:00">12 17, 2018</time> - <a href="/tmux-zhong-duan-fu-yong.html">tmux-终端复用</a></li>
-          </ul>
-          <h3>十月</h3>
-          <ul>
-              <li><time datetime="2018-10-06T19:09:48+08:00">10 06, 2018</time> - <a href="/about-me.html">About Me</a></li>
-          </ul>
-    </dl>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-11 11:03:11+08:00">2020-04-11</time></span>
+        <h1 class="entry-title"><a href="/feng-bu-si-xiao-xi-tou-di.html">分布式事务中可靠的消息投递机制</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="/feng-bu-si-xiao-xi-tou-di.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>消费者消费消息告知消息队列的两种机制：
+自动应答机制：消费者接受到消息后，消息队列便可删除消息，消息可能处理失败
+手动应答机制：消息者接收到消息并成功处理了消息，消息队列才能删除消息</p>
+<p>当消费者服务采取了限流措施，可能导致消息失败消费多次，从而进入死信队列，这时候需要人工干预来处理这些位于死信队列的消息。</p>
+<p>按理说，手动应答机制也可以实现消息的最终一致性，但可能导致消息队列性能下降，堆积大量失败消息。且其只能保证消费者和消息队列之前的消息的可靠投递。在消息的提供者和消息队列间，有可能出现消息写入消息队列失败，这样消息就会丢失。</p>
+<p>问题的关键就在于上游服务对下游服务不管不顾。</p>
+<p>消息传递形成闭环，即正反向消息机制，上游要知晓下游执行结果，并采取补偿机制，从而实现最终一致性，其中可能会出现消息重复投递的情况，要保证幂等性，可查阅之前的文章。</p>
+<p><img alt="img" src="https://kaiqiangzhao.github.io/post-images/1586574199024.png"></p>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="/tag/jia-gou.html">架构</a>      </div>
+    </div>
   </div>
-  <div class="article_meta"></div>
-</article>
+</article><!-- #post-## -->
                 </div>
               </div><!-- #main -->
           </div><!-- #primary -->
@@ -150,6 +145,7 @@
       window.scroll(0, document.getElementById('main').offsetTop);
     }})
   </script>
+
 
 
 

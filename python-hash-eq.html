@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="OOK">
+  <meta name="description" content="python中的__hash__和 __eq__ | python中dict和set的原理是哈希，其背后的实现依靠的是__hash__()和__eq__()方法，本篇文章将会讲解二者在python的dict和set使用，以及如何在自定义类中使用这两个方法。...">
+
+  <link rel="icon" type="image/png" href="/theme/imgs/favicon.ico" sizes="32x32">
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/theme/js/functions.js"></script>
+
+
+<meta name="keywords" content="python">
+
+
+  <title>python中的__hash__和 __eq__</title>
+
+  
+</head>
+
+<body class="home blog">
+
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="/index.html" >首页
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/about-me.html" >关于
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/archives.html" >归档
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/tags.html" >标签
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/个人语录.html" >个人语录
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://github.com/kaiqiangzhao" title="github" >
+<i class="fa iconfont fa-lg">&#xe85a;</i></a>
+                <a href="#mail" title="email" >
+<i class="fa iconfont fa-lg">&#xe667;</i></a>
+                <a href="https://www.zhihu.com/people/ooker" title="zhihu" >
+<i class="fa iconfont fa-lg">&#xe709;</i></a>
+               <a class="my-avatar" href="">
+                   <i class="fa fa-lg"><img src="/theme/imgs/avator.jpeg" class="attachment-full size-full" alt="logo"></i>
+               </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+    </header><!-- #masthead -->
+  </div>
+
+  <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-23 08:46:27+08:00">2020-04-23</time></span>
+        <h1 class="entry-title"><a href="/python-hash-eq.html">python中的__hash__和 __eq__</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="/python-hash-eq.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>python中dict和set的原理是哈希，其背后的实现依靠的是<code>__hash__()</code>和<code>__eq__()</code>方法，本篇文章将会讲解二者在python的dict和set使用，以及如何在自定义类中使用这两个方法。</p>
+<p><strong>Tips:散列表其实是一个稀疏数组，python会设法保证数组内1/3的元素是空的，当快要达到这个阈值的时候，原有的散列表会被复制到一个更大的空间，所以dict和set往往会占用大量内存，如果不是一定需要使用这两类的数据结构，可以使用元组和列表</strong></p>
+<p>先看一个正常的哈希自定义类创建的对象，python3中这个类继承了object的<code>__hash__()</code>方法，hash函数调用的其实就是类的<code>__hash__()</code>方法</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HashTest1</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="n">ht1</span> <span class="o">=</span> <span class="n">HashTest1</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ht1</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">)</span>  <span class="c1"># &lt;method-wrapper &#39;__hash__&#39; of HashTest1 object at 0x10e112190&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">hash</span><span class="p">(</span><span class="n">ht1</span><span class="p">))</span>  <span class="c1"># 283185689</span>
+</pre></div>
+
+
+<p>那自定义类的<code>__eq__()</code>和<code>__hash__()</code>有什么关系呢?
+如果自定义重载了<code>__eq__()</code>方法, 但没有重载<code>__hash__()</code>, 会将<code>__hash__</code>重置为None</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HashTest2</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="n">ht2</span> <span class="o">=</span> <span class="n">HashTest2</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ht2</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">)</span>  <span class="c1"># Output: None</span>
+<span class="c1"># print(hash(ht2))  # Output: TypeError: unhashable type: &#39;HashTest1&#39;</span>
+</pre></div>
+
+
+<p>上面的代码都是在python3下的，python2和python3下的机制有些不同。
+python3的自定义类会默认继承object
+python2的自定义的类没有继承object新式类的时候, 会出现和python3相同的问题。
+但当python2的自定义类继承了object, 重载了<code>__eq__()</code>方法, 但没有重载<code>__hash__()</code>, 依旧可以
+hash成功
+旧式类是没有<code>__hash__</code>, 子类如果想使用<code>__hash__</code>, 必须重写
+新式类有<code>__hash__</code>, 子类重载了<code>__eq__()</code>方法, 但没有重载<code>__hash__()</code>, 不会将<code>__hash__</code>重置为None, 可以使用父类的<code>__hash__</code></p>
+<div class="highlight"><pre><span></span><span class="c1"># python2 测试</span>
+<span class="k">class</span> <span class="nc">OldCls</span><span class="p">():</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">NewCls</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">OldCls</span><span class="p">()))</span>   <span class="c1"># &lt;type &#39;instance&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">NewCls</span><span class="p">()))</span>   <span class="c1"># &lt;class &#39;__main__.NewCls&#39;&gt;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">OldCls</span><span class="p">()</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">)</span>  <span class="c1"># AttributeError: OldCls instance has no attribute &#39;__hash__&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">NewCls</span><span class="p">()</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">)</span>  <span class="c1"># &lt;method-wrapper &#39;__hash__&#39; of NewCls object at 0x10a3349d0&gt;</span>
+</pre></div>
+
+
+<p>python中哈希集有：set, frozenset, dict
+谈到哈希集还需要说明python中的可变对象和不可变对象
+可变对象: list, dict, set
+不可变对象: tuple, string, int, float, bool</p>
+<ol>
+<li>如果一个对象是不可哈希的, 即没有定义<code>__hash__</code>方法, 其不可被用作哈希集的项</li>
+<li>
+<p>如果一个对象是可变的, 不管是否实现了<code>__eq__()</code>方法, 都不应该实现<code>__hash__()</code>，因为哈希集要求键是不可变的(如果对象的哈希值发生改变，它将处于错误的哈希桶中)</p>
+</li>
+<li>
+<p>如果一个对象是不可哈希的, 即没有定义<code>__hash__</code>方法, 其不可被用作哈希集的项</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HashTest3</span><span class="p">:</span>
+    <span class="fm">__hash__</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># 将实例的__hash__赋值为None, 是不起作用的, 需要在类内定义</span>
+        <span class="c1"># self.__hash__ = None</span>
+        <span class="k">pass</span>
+
+<span class="n">ht3</span> <span class="o">=</span> <span class="n">HashTest3</span><span class="p">()</span>
+<span class="n">global_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">global_dict</span><span class="p">[</span><span class="n">ht3</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ht3_value&quot;</span>  <span class="c1"># Output: TypeError: unhashable type: &#39;HashTest3&#39;</span>
+</pre></div>
+
+
+<p><strong>注意：</strong>
+用户自定义的类默认带有<code>__eq__()</code>和 <code>__hash__()</code> 方法(从父类继承)；
+使用它们与任何对象（自己除外）比较必定不相等，只能自己等于自己,
+并且<code>x.__hash__()</code>会返回一个恰当的值以确保 <code>x == y</code>同时意味着 <code>x is y</code> 且<code>hash(x) == hash(y)</code>
+所以自己重写<code>__eq__</code>和<code>__hash__</code>也需要注意, 一旦<code>x==y</code>, 就必须保证<code>hash(x) == hash(y)</code></p>
+<ul>
+<li>如果一个对象是可变的, 不管是否实现了<code>__eq__()</code>方法, 都不应该实现<code>__hash__()</code></li>
+</ul>
+<p>没有实现<code>__eq__</code>: 一旦出现bug, 很难被定位排查，这里的<code>__eq__</code>是继承父类的, 只有自己等于自己, 才返回True, 所以, ht4和ht4_1是不相等的, 对应不同的key</p>
+<div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HashTest4</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="n">HASHKEY</span> <span class="o">=</span> <span class="s2">&quot;hash_key&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">HASHKEY</span><span class="p">)</span>
+
+
+<span class="n">ht4</span> <span class="o">=</span> <span class="n">HashTest4</span><span class="p">()</span>
+<span class="n">ht4_1</span> <span class="o">=</span> <span class="n">HashTest4</span><span class="p">()</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">ht4</span>
+<span class="n">ht4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">ht4</span>
+<span class="n">ht4</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># [1, 2] [1, 2]</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">ht4_1</span>
+<span class="n">global_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">global_dict</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">global_dict</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">global_dict</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">global_dict</span><span class="p">)</span>  <span class="c1"># {[1, 2]: 2, []: 3}</span>
+
+<span class="n">ht4_str</span> <span class="o">=</span> <span class="s2">&quot;ht4_str&quot;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">ht4_str</span>
+<span class="n">ht4_str</span> <span class="o">=</span> <span class="s2">&quot;new_ht4_str&quot;</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">ht4_str</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>  <span class="c1"># ht4_str new_ht4_str</span>
+
+<span class="n">global_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">global_dict</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">global_dict</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">global_dict</span><span class="p">)</span>  <span class="c1"># {&#39;ht4_str&#39;: 1, &#39;new_ht4_str&#39;: 2}</span>
+</pre></div>
+
+
+<p>实现了<code>__eq__</code>：哈希集判断两个key是否相等, 需要满足hash值相同和eq执行后的结果相同</p>
+<div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nl">HashTest5</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="n">HASHKEY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;hash_key&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__hash__</span><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">hash</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">HASHKEY</span><span class="p">)</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__eq__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">other</span><span class="p">)</span><span class="err">:</span><span class="w"></span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">val</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">other</span><span class="p">.</span><span class="nl">val</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">True</span><span class="w"></span>
+<span class="w">        </span><span class="k">else</span><span class="err">:</span><span class="w"></span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">False</span><span class="w"></span>
+
+<span class="n">ht5_1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashTest5</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="n">ht5_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashTest5</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"></span>
+<span class="n">ht5_3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HashTest5</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+
+<span class="n">global_dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dict</span><span class="p">()</span><span class="w"></span>
+<span class="n">global_dict</span><span class="o">[</span><span class="n">ht5_1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">global_dict</span><span class="o">[</span><span class="n">ht5_2</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="n">global_dict</span><span class="o">[</span><span class="n">ht5_3</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w"></span>
+<span class="err">#</span><span class="w"> </span><span class="n">ht5_1和ht5_2的hash值相同和eq相等</span><span class="p">,</span><span class="w"> </span><span class="n">代表是同一个key</span><span class="w"></span>
+<span class="k">print</span><span class="p">(</span><span class="n">global_dict</span><span class="p">)</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="err">{</span><span class="o">&lt;</span><span class="n">__main__</span><span class="p">.</span><span class="n">HashTest5</span><span class="w"> </span><span class="k">object</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mh">0x109dd53d0</span><span class="o">&gt;</span><span class="err">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">__main__</span><span class="p">.</span><span class="n">HashTest5</span><span class="w"> </span><span class="k">object</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mh">0x109dd5450</span><span class="o">&gt;</span><span class="err">:</span><span class="w"> </span><span class="mi">3</span><span class="err">}</span><span class="w"></span>
+</pre></div>
+
+
+<h2>总结</h2>
+<p>所以: <code>__hash__</code>是为了找到哈希桶的位置, 如果桶内没有值, 直接存入,
+如果有数值, 需要<code>__eq__</code>来判断桶内的key中是否相同, 如果相同就重置, 否则开辟新的空间存数值
+桶内不仅记录key值也记录value值, hash是根据key找到对应的桶
+哈希集判断两个key是否相等, 需要满足hash值相同和eq执行后的结果相同
+形象的说, 就是<code>__hash__</code>方法定义如何寻找桶的位置, <code>__eq__</code>定义桶的名字是否是一样的</p>
+<p><strong>__eq__的引申</strong>
+is比较的是对象的标识(引用)，直接调用id()函数来比较两者的大小
+<code>==</code>比较的是对象的值，调用的是<code>__eq__()</code>方法
+如果一个类继承的是objects，那==比较的也是两个对象的ID，和is一样
+但是多数内置类型都重写了<code>__eq__()</code>方法，会考虑对象属性的值</p>
+<p>参考文献：官方文档: https://docs.python.org/zh-cn/3.7/reference/datamodel.html#object.<strong>hash</strong></p>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="/tag/python.html">python</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+  <div id="mail" class="overlay">
+      <div class="popup">
+          <a class="close" href="#">×</a>
+          <div id="popup_content"></div>
+      </div>
+  </div>
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="/pages/terms-and-conditions">Terms & Conditions</a><br />
+                    This site uses the <a href="https://github.com/limbenjamin/voce">voce</a> theme by <a href="//limbenjamin.com/">Benjamin Lim</a><br />
+                    &copy; 2020 <a href="">OOK</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>

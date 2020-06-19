@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="OOK">
-  <meta name="description" content="A listing of all articles on this site">
+  <meta name="description" content="MySQL client ran out of memory | 访问网站，调试控制台报出的504 (gateway time-out)错误 failed to load resource the server responded with a status of 504 (gateway...">
 
   <link rel="icon" type="image/png" href="/theme/imgs/favicon.ico" sizes="32x32">
 
@@ -20,9 +20,10 @@
   <script type="text/javascript" src="/theme/js/functions.js"></script>
 
 
-  <meta name="keywords" content="life, python, 人工智能, 数据库, 算法, 架构, 其他, linux">
+<meta name="keywords" content="数据库">
 
-  <title>Archive</title>
+
+  <title>MySQL client ran out of memory</title>
 
   
 </head>
@@ -84,36 +85,64 @@
               <div id="main" class="site-main" role="main">
                 <div class="article-container">
 <article>
-  <div class="article_text">
-    <dl>
-        <h2>2020</h2>
-          <h3>六月</h3>
-          <ul>
-              <li><time datetime="2020-06-16T19:09:48+08:00"> 6 16, 2020</time> - <a href="/ge-ren-yu-lu.html">个人语录</a></li>
-          </ul>
-          <h3>四月</h3>
-          <ul>
-              <li><time datetime="2020-04-23T08:46:27+08:00"> 4 23, 2020</time> - <a href="/python-hash-eq.html">python中的__hash__和 __eq__</a></li>
-              <li><time datetime="2020-04-21T08:39:48+08:00"> 4 21, 2020</time> - <a href="/bei-ye-shi-gong-shi.html">贝叶斯公式</a></li>
-              <li><time datetime="2020-04-20T17:31:40+08:00"> 4 20, 2020</time> - <a href="/mysql-client-oom.html">MySQL client ran out of memory</a></li>
-              <li><time datetime="2020-04-12T17:17:54+08:00"> 4 12, 2020</time> - <a href="/dong-tai-gui-hua-feng-xi.html">动态规划分析</a></li>
-              <li><time datetime="2020-04-11T11:03:11+08:00"> 4 11, 2020</time> - <a href="/feng-bu-si-xiao-xi-tou-di.html">分布式事务中可靠的消息投递机制</a></li>
-              <li><time datetime="2020-04-09T22:28:01+08:00"> 4 09, 2020</time> - <a href="/ru-he-bao-zheng-mi-deng-xing.html">如何保证幂等性</a></li>
-              <li><time datetime="2020-04-06T16:04:49+08:00"> 4 06, 2020</time> - <a href="/jian-zhan-li-xian-ji.html">建站历险记</a></li>
-          </ul>
-        <h2>2018</h2>
-          <h3>十二月</h3>
-          <ul>
-              <li><time datetime="2018-12-17T23:16:55+08:00">12 17, 2018</time> - <a href="/tmux-zhong-duan-fu-yong.html">tmux-终端复用</a></li>
-          </ul>
-          <h3>十月</h3>
-          <ul>
-              <li><time datetime="2018-10-06T19:09:48+08:00">10 06, 2018</time> - <a href="/about-me.html">About Me</a></li>
-          </ul>
-    </dl>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2020-04-20 17:31:40+08:00">2020-04-20</time></span>
+        <h1 class="entry-title"><a href="/mysql-client-oom.html">MySQL client ran out of memory</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="/mysql-client-oom.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>访问网站，调试控制台报出的504 (gateway time-out)错误</p>
+<div class="highlight"><pre><span></span><span class="err">failed to load resource the server responded with a status of 504 (gateway time-out)</span>
+</pre></div>
+
+
+<p>504 网关超时，表示服务器没有及时处理完数据，客户端主动连接断开后，客户端(如浏览器)生成的http状态码，而非服务端返回的状态码。</p>
+<p>如nginx中有下面三项配置：
+但都是nginx和服务端的关系，即nginx要求服务端在规定时间内连接，处理，返回数据成功。</p>
+<div class="highlight"><pre><span></span><span class="err">后端服务器连接的超时时间</span><span class="n">_发起握手等候响应超时时间</span>
+<span class="n">nginx跟后端服务器连接超时时间</span><span class="p">(</span><span class="err">代理连接超时</span><span class="p">)</span>
+<span class="n">proxy_connect_timeout</span> <span class="mi">60</span><span class="p">;</span>
+
+<span class="err">后端服务器数据回传时间</span><span class="p">(</span><span class="err">代理发送超时</span><span class="p">)</span>
+<span class="err">后端服务器数据回传时间</span><span class="n">_就是在规定时间之内后端服务器必须传完所有的数据</span>
+<span class="n">proxy_send_timeout</span> <span class="mi">60</span><span class="p">;</span>
+
+<span class="err">连接成功后，后端服务器响应时间</span><span class="p">(</span><span class="err">代理接收超时</span><span class="p">)</span>
+<span class="err">连接成功后</span><span class="n">_等候后端服务器响应时间_其实已经进入后端的排队之中等候处理</span><span class="err">（也可以说是后端服务器处理请求的时间）</span>
+<span class="n">proxy_read_timeout</span> <span class="mi">60</span><span class="p">;</span>
+</pre></div>
+
+
+<p>查看nginx日志，发现nginx返回的状态码为499，对应的是 “client has closed connection”，即服务端处理时间太长，客户端关闭了连接。</p>
+<p>所以归根到底，还是服务器的问题。
+可以分为下面两种情况：</p>
+<ul>
+<li>服务器接处理的这个请求慢但是可以正常处理，</li>
+<li>服务器在处理这个请求的时候出现了非bug导致的异常，导致执行中断，因为是bug导致的异常会被捕获，返回给客户端其他的状态码。</li>
+</ul>
+<p>还是需要回归代码，需要重点关注是否有复杂的逻辑代码，以及数据库慢查询(查询语句不正确或数据量大)，或数据库异常。</p>
+<p>最后发现了一条查询语句的返回了20万条的数据。
+在错误日志中也找到了<code>MySQL client ran out of memory</code>的报错。</p>
+<p>网上很多资料说是修改mysql的配置文件my.cnf，加大缓存空间，其实我们更应该做的是优化查询语句，如是否可以通过limit减少一次查询出来的数据量。</p>
+<p>mysql<a href="https://dev.mysql.com/doc/refman/8.0/en/out-of-memory.html">官网</a>也说道若要解决此问题，首先检查查询是否正确。 它返回这么多行是否合理？ 也可以使用--quick选项来避免对查询结果进行缓存，但也会加重数据库的查询负载。</p>
+<h3>总结</h3>
+<ul>
+<li>前端收到504超时</li>
+<li>nginx的499</li>
+<li>慢查询或数据错误</li>
+<li>优化查询语句</li>
+</ul>
+<p>参考链接：https://www.lifewire.com/504-gateway-timeout-error-explained-2622941</p>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="/tag/shu-ju-ku.html">数据库</a>      </div>
+    </div>
   </div>
-  <div class="article_meta"></div>
-</article>
+</article><!-- #post-## -->
                 </div>
               </div><!-- #main -->
           </div><!-- #primary -->
@@ -150,6 +179,7 @@
       window.scroll(0, document.getElementById('main').offsetTop);
     }})
   </script>
+
 
 
 

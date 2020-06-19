@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="OOK">
+  <meta name="description" content="tmux-终端复用 | linux 下的终端复用工具，一般用来跑后台程序，以防网络中断，退出会话，导致程序终止。 简介 会话 窗口 窗格 简介 tmux is a terminal multiplexer.(终端复用) tmux是终端多路复用神器。它允许你在一个终端的多个程序之间轻松切换。...">
+
+  <link rel="icon" type="image/png" href="/theme/imgs/favicon.ico" sizes="32x32">
+
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/theme/css/font.css" type="text/css" media="all">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/style.css" type="text/css" media="all">
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/theme/js/functions.js"></script>
+
+
+<meta name="keywords" content="linux">
+
+
+  <title>tmux-终端复用</title>
+
+  
+</head>
+
+<body class="home blog">
+
+  <div>
+    <header class="site-header">
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="row">
+            <div class="site-navigation-inner col-sm-12">
+              <div class="navbar-header">
+                <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <ul id="menu-all-pages" class="nav navbar-nav">
+                <li class="menu-item"><a href="/index.html" >首页
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/about-me.html" >关于
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/archives.html" >归档
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/tags.html" >标签
+<i class="fa  fa-lg"></i></a></li>
+                <li class="menu-item"><a href="/个人语录.html" >个人语录
+<i class="fa  fa-lg"></i></a></li>
+              </ul>
+              </div>
+              <div class="social">   
+                <a href="https://github.com/kaiqiangzhao" title="github" >
+<i class="fa iconfont fa-lg">&#xe85a;</i></a>
+                <a href="#mail" title="email" >
+<i class="fa iconfont fa-lg">&#xe667;</i></a>
+                <a href="https://www.zhihu.com/people/ooker" title="zhihu" >
+<i class="fa iconfont fa-lg">&#xe709;</i></a>
+               <a class="my-avatar" href="">
+                   <i class="fa fa-lg"><img src="/theme/imgs/avator.jpeg" class="attachment-full size-full" alt="logo"></i>
+               </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav><!-- .site-navigation -->
+
+    </header><!-- #masthead -->
+  </div>
+
+  <div id="content" class="site-content">
+      <div class="container main-content-area">
+        <div class="row">
+          <div class="main-content-inner col-sm-12 col-md-12">
+            <div id="primary" class="content-area">
+              <div id="main" class="site-main" role="main">
+                <div class="article-container">
+<article>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2018-12-17 23:16:55+08:00">2018-12-17</time></span>
+        <h1 class="entry-title"><a href="/tmux-zhong-duan-fu-yong.html">tmux-终端复用</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="/tmux-zhong-duan-fu-yong.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <p>linux 下的终端复用工具，一般用来跑后台程序，以防网络中断，退出会话，导致程序终止。</p>
+<ol>
+<li>简介</li>
+<li>会话</li>
+<li>窗口</li>
+<li>窗格</li>
+</ol>
+<hr>
+<h2>简介</h2>
+<p>tmux is a terminal multiplexer.(终端复用)</p>
+<p>tmux是终端多路复用神器。它允许你在一个终端的多个程序之间轻松切换。</p>
+<p>使用它最直观的好处就是，通过一个终端登录远程主机并运行tmux后，在其中可以开启多个控制台而无需在浪费多余的终端来连接这台远程主机。当我们在tmux中工作的时候，即使关掉连接窗口，再次连接，进入tmux和会话我们之前的工作仍然在继续</p>
+<hr>
+<p><strong>tmux中有三种概念：会话（session），窗口（window），窗格（pane）</strong></p>
+<ul>
+<li>会话有点像是tmux的服务，在后端运行，我们可以通过tmux命令创建这种服务，并且可以通过tmux命令查看，附件到后端允许的会话中。</li>
+<li>一个会话可以包含多个窗口</li>
+<li>一个窗口可以被分割成多个窗格</li>
+</ul>
+<hr>
+<h2>会话</h2>
+<p>1.<strong>tmux new -s session1</strong></p>
+<ul>
+<li>新建一个会话，-s (session的首字母)。运行后会从终端环境进入到会话环境。</li>
+<li>当进入到session之后，在下面有一条绿色的状态指示栏，example：[session]0:myserver1*</li>
+<li>依次是当前会话的名字，会话中的窗口序号，以及窗口名字，窗口名字后面有一个星号*,表示是我们操作的当前窗口。</li>
+</ul>
+<p>2.<strong>ctrl+b d</strong></p>
+<ul>
+<li>退出会话，回到shell的终端环境（linux的shell、bash，termial），d是detach(脱离)，但此时tmux的程序还在后端运行。</li>
+</ul>
+<p>3.<strong>tmux ls</strong></p>
+<ul>
+<li>终端环境查看会话列表</li>
+</ul>
+<p>4.<strong>ctrl+b s</strong></p>
+<ul>
+<li>会话环境查看会话列表，且可以通过方向键选择会话并回车，在会话间进行切换</li>
+</ul>
+<p>5.<strong>tmux a -t session1</strong></p>
+<ul>
+<li>从终端环境进入会话，a字母是attach（附加）的头字母，-t 指定要进入的已存在的会话名</li>
+</ul>
+<p>6.<strong>tmux kill-session -t session1</strong></p>
+<ul>
+<li>销毁会话，可以发生在终端环境和会话环境</li>
+<li>在终端直接输入即可，在会话中需要先ctrl+b :（注意冒号），然后输入命令</li>
+</ul>
+<p>7.<strong>tmux rename -t old_session_name new_session_name</strong></p>
+<ul>
+<li>重命名会话，在终端环境中</li>
+</ul>
+<p>8.<strong>ctrl+b $ </strong>
+- 重命名会话，在会话环境中</p>
+<hr>
+<h2>窗口</h2>
+<p>窗口是我们工作的最小单位</p>
+<p>默认情况下，在一个window中，只有一个大窗格，占满整个窗口区域。</p>
+<p>新建的会话中会默认一个窗口，该窗口名字一般是登陆终端的用户名@主机</p>
+<p>1.<strong>ctrl+b c</strong></p>
+<ul>
+<li>创建窗口，默认情况下创建出来的窗口，由窗口序号+窗口名字组成</li>
+</ul>
+<p>2.<strong>ctr+b ,</strong>（不要忘记逗号）</p>
+<ul>
+<li>重命名窗口</li>
+</ul>
+<p>3.<strong>ctrl+b p/n/0/w/l</strong></p>
+<ul>
+<li>
+<p>窗口切换</p>
+</li>
+<li>
+<p>ctrl+b p (previous的首字母) 切换到上一个window。</p>
+</li>
+<li>ctrl+b n (next的首字母) 切换到下一个window。</li>
+<li>ctrl+b 0 切换到0号window，依次类推，可换成任意窗口序号</li>
+<li>ctrl+b w (windows的首字母) 列出当前session所有window，通过上、下键切换窗口</li>
+<li>ctrl+b l (字母L的小写)相邻的window切换</li>
+</ul>
+<p>4.<strong>ctrl+&amp;</strong></p>
+<ul>
+<li>关闭当前window，会有y/n的提示</li>
+</ul>
+<hr>
+<h2>窗格</h2>
+<p>tmux的一个窗口，可以被分成多个pane（窗格），可以做出分屏的效果</p>
+<p>1.<strong>ctrl+b %</strong></p>
+<ul>
+<li>垂直分屏</li>
+</ul>
+<p>2.<strong>ctrl+b “</strong></p>
+<ul>
+<li>水平分屏</li>
+<li>分屏之后光标停留在哪个pane上，表示该pane是活动的，另外一般情况下当前pane会被绿色的线条围起来。一般分屏之后当前窗口名字会重置为默认窗口名字。通过多次分屏操作，我们可以得到各种样子的分屏效果</li>
+</ul>
+<p>3.<strong>ctrl+b o/Up/Down/Left/Right/Space/z</strong></p>
+<ul>
+<li>切换pane</li>
+<li>ctrl+b o 依次切换当前窗口下的各个pane</li>
+<li>ctrl+b Up/Down/Left/Right 根据按箭方向选择切换到某个pane</li>
+<li>ctrl+b Space (空格键) 对当前窗口下的所有pane重新排列布局，每按一次，换一种样式。</li>
+<li>ctrl+b z 最大化当前pane。再按一次后恢复。</li>
+</ul>
+<p>4.<strong>ctrl+b x</strong> </p>
+<ul>
+<li>关闭当前使用中的pane，操作后有关闭提示</li>
+</ul>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="/tag/linux.html">linux</a>      </div>
+    </div>
+  </div>
+</article><!-- #post-## -->
+                </div>
+              </div><!-- #main -->
+          </div><!-- #primary -->
+        </div>
+      </div><!-- close .row -->
+    </div><!-- close .container -->
+  </div><!-- close .site-content -->
+
+  <div id="mail" class="overlay">
+      <div class="popup">
+          <a class="close" href="#">×</a>
+          <div id="popup_content"></div>
+      </div>
+  </div>
+
+  <div id="footer-area">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="site-info container">
+        <div class="row">
+                    <div class="copyright col-md-12">
+                    <a href="/pages/privacy-policy">Privacy Policy</a> | 
+                    <a href="/pages/terms-and-conditions">Terms & Conditions</a><br />
+                    This site uses the <a href="https://github.com/limbenjamin/voce">voce</a> theme by <a href="//limbenjamin.com/">Benjamin Lim</a><br />
+                    &copy; 2020 <a href="">OOK</a> </div>
+        </div>
+      </div><!-- .site-info -->
+      <div class="scroll-to-top" style="display: none;"><i class="fa fa-angle-up"></i></div><!-- .scroll-to-top -->
+    </footer><!-- #colophon -->
+  </div>
+
+  <script type="text/javascript">
+    window.addEventListener('load', function(){
+    if (window.location.pathname != '/' && window.location.pathname != '/index.html'){
+      window.scroll(0, document.getElementById('main').offsetTop);
+    }})
+  </script>
+
+
+
+
+</body>
+</html>
