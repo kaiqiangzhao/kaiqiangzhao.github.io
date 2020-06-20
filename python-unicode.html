@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="OOK">
-  <meta name="description" content="A listing of all categories on this site">
+  <meta name="description" content="python编码 | 编码 1 编码历史 为了处理英文字符，产生了ASCII码 为了处理中文字符，产生了GB2312 为了处理各国字符，产生了Unicode 为了提高Unicode存储和传输性能，产生UTF-8，它是Unicode的一种实现 2 python2...">
 
   <link rel="icon" type="image/png" href="/theme/imgs/favicon.ico" sizes="32x32">
 
@@ -20,9 +20,10 @@
   <script type="text/javascript" src="/theme/js/functions.js"></script>
 
 
-  <meta name="keywords" content="life, python, 人工智能, 数据库, 算法, 架构, 其他, linux">
+<meta name="keywords" content="python">
 
-  <title>Categories | ookcafe</title>
+
+  <title>python编码</title>
 
   
 </head>
@@ -84,14 +85,43 @@
               <div id="main" class="site-main" role="main">
                 <div class="article-container">
 <article>
-  <div class="article_text">
-    <ul>
-      <li><a href="/category/life.html">life</a> (1)</li>
-      <li><a href="/category/misc.html">misc</a> (10)</li>
-      <li><a href="/category/python.html">Python</a> (1)</li>
-    </ul>
+  <div class="blog-item-wrap">
+    <div class="post-inner-content">
+      <header class="entry-header page-header">
+        <span class="cat-item"><time datetime="2019-07-21 08:39:48+08:00">2019-07-21</time></span>
+        <h1 class="entry-title"><a href="/python-unicode.html">python编码</a></h1>
+      </header><!-- .entry-header -->
+      <div class="fb-like" data-href="/python-unicode.html" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+      <div class="entry-content">
+        <h2>编码</h2>
+<h3>1 编码历史</h3>
+<p>为了处理英文字符，产生了ASCII码</p>
+<p>为了处理中文字符，产生了GB2312</p>
+<p>为了处理各国字符，产生了Unicode</p>
+<p>为了提高Unicode存储和传输性能，产生UTF-8，它是Unicode的一种实现</p>
+<h3>2 python2</h3>
+<p>python2中的默认的字符编码为ASCII码</p>
+<p>python2中字符串有str和unicode两种类型，str有各种编码的区别，Unicode是编码的标准形式</p>
+<p>python2中可以直接查看到unicode的字符串</p>
+<h3>3 decode() 和 encode()</h3>
+<p>decode() 方法将其他编码字符串转化为Unicode编码字符</p>
+<p>encode() 方法将unicode编码字符串转换为其它编码字符</p>
+<p>Python2 的对于字符编码额转换要以unicode作为”中间人“进行转换。</p>
+<h3>python3</h3>
+<p>Python 3的源码.py文件 的默认编码方式为UTF-8，所以在Python3中你可以不用在py脚本中写coding声明，并且系统传递给python的字符不再受系统默认编码的影响，统一为unicode编码。</p>
+<p>将字符串和字节序列做了区别，字符串str是字符串标准形式与2.x中unicode类似，bytes类似2.x中的str有各种编码区别。bytes通过解码转化成str,str通过编码转化成bytes。</p>
+<hr>
+<p>我们看到当一个中文字符出现在一个list(或tuple、dict)中时，它并不会被显示为一个中文而是字节串。但当该字符串从list中提取出来再print时就能够正常显示为中文。字节串是所有字符在python中的“本质”形态，所以你可以简单的理解为list中呈现出的字节串是给计算机看的。</p>
+<h3>参考文献</h3>
+<p>https://blog.csdn.net/apache0554/article/details/53889253</p>
+      </div><!-- .entry-content -->
+      <br /><br />
+      <div class="article_meta">
+        Tags:
+          <a href="/tag/python.html">python</a>      </div>
+    </div>
   </div>
-</article>
+</article><!-- #post-## -->
                 </div>
               </div><!-- #main -->
           </div><!-- #primary -->
@@ -128,6 +158,7 @@
       window.scroll(0, document.getElementById('main').offsetTop);
     }})
   </script>
+
 
 
 
