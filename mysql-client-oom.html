@@ -142,6 +142,21 @@
           <a href="/tag/shu-ju-ku.html">数据库</a>      </div>
     </div>
   </div>
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+        clientID: 'cb2e265db6c58ad25128',
+        clientSecret: '2b8b6e9f1c1faf0ee6fd859ba9b8ef52e35ba0fa\n',
+        repo: 'kaiqiangzhao.github.io',
+        owner: 'kaiqiangzhao',
+        admin: ['kaiqiangzhao'],
+        id: location.pathname.substr(0, 50),
+        distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+    </script>
 </article><!-- #post-## -->
                 </div>
               </div><!-- #main -->
