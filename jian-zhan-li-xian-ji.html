@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="OOK">
-  <meta name="description" content="建站历险记 | 自己的建站历险记： github page(jekyll) github page((pelican) namesilo购买域名 xxx购买香港服务器 搭建typecho 删除香港服务器 github page(gridea) 开启github page 的 https 说明...">
+  <meta name="description" content="建站历险记 | 自己的建站历险记： github page(jekyll) github page((pelican) namesilo购买域名 xxx购买香港服务器 搭建typecho 删除香港服务器 github page(gridea) 开启github page 的 https...">
 
   <link rel="icon" type="image/png" href="/theme/imgs/favicon.ico" sizes="32x32">
 
@@ -103,6 +103,8 @@
 <li>删除香港服务器</li>
 <li>github page(gridea)</li>
 <li>开启github page 的 https</li>
+<li>再次转回pelican</li>
+<li>文章添加gitalk评论</li>
 </ol>
 <h2>说明</h2>
 <p>jekyll，pelican, gridea都是静态网站的生成器。</p>
@@ -116,6 +118,7 @@ typecho的搭建也不复杂，就是没有找到自己喜欢的主题，然后�
 <li>需要新建一个数据库，库名叫“typecho”</li>
 <li>typecho文件解压编译的位置所属的用户，要有对数据库的操作权限。否则在web配置页面，会报连接数据库错误。</li>
 <li>dns解析A绑定下面四个ip，<code>185.199.108.153，185.199.109.153，185.199.110.153，185.199.111.153</code>, 不要光绑定你ping出来的那个地址，因为可能会变。具体看<a href="https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site">官网</a></li>
+<li>(gitalk)[https://github.com/gitalk/gitalk]文档中的代码要添加大<code>&lt;/article&gt;</code>前面</li>
 </ul>
       </div><!-- .entry-content -->
       <br /><br />
@@ -124,6 +127,7 @@ typecho的搭建也不复杂，就是没有找到自己喜欢的主题，然后�
           <a href="/tag/qi-ta.html">其他</a>      </div>
     </div>
   </div>
+    <!-- 文章评论gitalk -->
     <div id="gitalk-container"></div>
     <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
     <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
